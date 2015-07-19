@@ -30,8 +30,14 @@ public class Client {
 			System.exit(0);
 		}
 		Main.log.info("Streams constructed successfully");
-		
-		
+	}
+	
+	//constructor for tests only
+	public Client(BufferedReader bfr, DataOutputStream out, Socket socket){
+		this.bfr = bfr;
+		this.out = out;
+		this.socket = socket;
+		nick = "";
 	}
 	
 	public boolean exit(){

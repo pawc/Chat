@@ -57,7 +57,7 @@ public class Main {
 						System.out.println();
 					}
 				}
-				/*
+				
 				case "shutdown" : {
 					for(Client client : clientContainer){
 						client.exit();
@@ -65,7 +65,7 @@ public class Main {
 					System.out.println("Sever shutdown");
 					System.exit(0);
 				}
-				*/
+				
 			}
 			
 		}
