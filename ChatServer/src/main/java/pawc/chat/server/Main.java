@@ -62,7 +62,8 @@ public class Main {
 					for(Client client : clientContainer){
 						client.exit();
 					}
-					System.out.println("Sever shutdown");
+					System.out.println("Server shutdown");
+					sc.close();
 					System.exit(0);
 				}
 				

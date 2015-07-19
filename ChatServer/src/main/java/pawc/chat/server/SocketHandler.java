@@ -17,6 +17,11 @@ public class SocketHandler extends Thread{
 		try{
 			//retreiving nick
 			client.setNick(client.getBufferedReader().readLine());
+				
+			for(Client client : Main.clientContainer){
+				client.getDataOutputStream().writeBytes("*"+this.client.getNick()+"\n");
+			}
+				
 			
 			//main loop
 			client.getDataOutputStream().writeBytes("Welcome to the echo server. Type quit to exit\n");
@@ -27,6 +32,9 @@ public class SocketHandler extends Thread{
 			}
 			//exiting
 			
+			for(Client client : Main.clientContainer){
+				client.getDataOutputStream().writeBytes("**"+this.client.getNick()+"\n");
+			}
 			client.exit();
 			Main.clientContainer.remove(this.client);
 			
@@ -38,5 +46,6 @@ public class SocketHandler extends Thread{
 		Main.log.info("Exiting thread");
 		interrupt();
 	}
+	
 	
 }
