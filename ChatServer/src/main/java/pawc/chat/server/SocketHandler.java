@@ -18,14 +18,22 @@ public class SocketHandler extends Thread{
 			//retreiving nick
 			String nick = client.getBufferedReader().readLine();
 			if(!nick.startsWith("*")) client.setNick(nick);
-			else{client.getDataOutputStream().writeBytes("Choose a different nick\n");
-			client.exit();
-			Main.clientContainer.remove(this.client);
-			this.interrupt();
+			else{
+				client.getDataOutputStream().writeBytes("Choose a different nick\n");
+				client.exit();
+				Main.clientContainer.remove(this.client);
+				this.interrupt();
+				}
+			
+			//sending all nicks to all
+			String nicks = "*";
+			
+			for(Client client : Main.clientContainer){
+				nicks+=client.getNick()+"*";
 			}
 				
 			for(Client client : Main.clientContainer){
-				client.getDataOutputStream().writeBytes("*"+this.client.getNick()+"\n");
+				client.getDataOutputStream().writeBytes(nicks+"\n");
 			}
 				
 			

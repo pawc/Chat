@@ -1,38 +1,51 @@
 package pawc.chat.client.controller;
 
 
-import javafx.event.Event;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
+import java.net.Socket;
+
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.SelectionModel;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
+
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
+
 
 
 public class Controller {
 
     
     @FXML
-    public TextArea area;
+    protected TextArea area;
     
     @FXML
-    public TextField field;
+    protected TextField field;
     
     @FXML
-    public ListView list;
+    protected ListView list;
+    
+    @FXML private MenuItem connect;
+    @FXML private MenuItem settings;
+    @FXML private MenuItem quit;
+    
+    @FXML private MenuItem about;
   
-
+    protected String nick = "pawc";
+    protected String host = "localhost";
+    protected int port = 3000;
+    protected Socket socket;
+    protected BufferedReader bfr;
+    protected DataOutputStream out;
+    protected boolean connected = false;
 
     
     public void initialize(){
@@ -42,16 +55,34 @@ public class Controller {
     	field.setOnKeyPressed(new EventHandler<KeyEvent>(){
     		
     		public void handle(KeyEvent e){
-    			if(!field.getText().equals("")){
+    			if(connected&&!field.getText().equals("")){
 	    			if(e.getCode()==KeyCode.ENTER){
-	    				area.appendText(field.getText()+"\n");
+	    				try{
+	    				out.writeBytes(field.getText()+"\n");
+	    				}
+	    				catch(IOException error){
+	    					log("Couldn't send a message");
+	    					log(error.toString());
+	    				}
 	    				field.setText("");
 	    			}
     			}
+    			//else{log("Blank input or not connected to the server");}
     		}
     	});
     	
+    	connect.setOnAction(event->{
+    		new Connection(this).start();
+    	});
+    	
     }
+    
+    
+    
+    public void log(String string){
+    	area.appendText(string+"\n");
+    }
+
     
 }
         
