@@ -17,7 +17,7 @@ public class SocketHandler extends Thread{
 		try{
 			//retreiving nick
 			String nick = client.getBufferedReader().readLine();
-			if(!nick.startsWith("*")&&!nick.startsWith("**")) client.setNick(nick);
+			if(!nick.startsWith("*")) client.setNick(nick);
 			else{client.getDataOutputStream().writeBytes("Choose a different nick\n");
 			client.exit();
 			Main.clientContainer.remove(this.client);
