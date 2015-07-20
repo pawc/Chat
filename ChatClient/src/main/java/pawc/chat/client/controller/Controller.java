@@ -9,7 +9,8 @@ import java.net.Socket;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 
@@ -18,6 +19,8 @@ import javafx.scene.control.TextField;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 
 
@@ -39,9 +42,9 @@ public class Controller {
     
     @FXML private MenuItem about;
   
-    protected String nick = "pawc";
-    protected String host = "localhost";
-    protected int port = 3000;
+    protected static String nick = "";
+    protected static String host = "localhost";
+    protected static int port = 3000;
     protected Socket socket;
     protected BufferedReader bfr;
     protected DataOutputStream out;
@@ -50,6 +53,8 @@ public class Controller {
     
     public void initialize(){
     	
+    	area.setText("Welcome to ChatClient. Edit nick, host and port"
+    			+ " in Chat->Settings. \nTo connect click Chat->Connect\n");
     	area.setEditable(false);
     	
     	field.setOnKeyPressed(new EventHandler<KeyEvent>(){
@@ -75,12 +80,38 @@ public class Controller {
     		new Connection(this).start();
     	});
     	
+    	settings.setOnAction(event->{
+    		AnchorPane settingsPane;
+    		try {
+				settingsPane = (AnchorPane) FXMLLoader.load(Controller.class.getResource("Settings.fxml"));
+			} catch (IOException e) {
+				log("Couldn't load settings pane: "+e.toString());
+				return;
+			}
+    		Scene scene = new Scene(settingsPane);
+    		Stage stage = new Stage();
+    		stage.setTitle("Chat settings");
+    		stage.setResizable(false);
+    		stage.setScene(scene);
+    		stage.show();
+    		
+    		
+    	});
+    	
     }
     
     
     
     public void log(String string){
     	area.appendText(string+"\n");
+    }
+    
+    protected String getNick(){
+    	return nick;
+    }
+    
+    protected String getHost(){
+    	return host;
     }
 
     

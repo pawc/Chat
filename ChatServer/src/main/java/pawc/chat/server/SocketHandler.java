@@ -17,7 +17,7 @@ public class SocketHandler extends Thread{
 		try{
 			//retreiving nick
 			String nick = client.getBufferedReader().readLine();
-			if(!nick.startsWith("*")) client.setNick(nick);
+			if(!nick.contains("*")) client.setNick(nick);
 			else{
 				client.getDataOutputStream().writeBytes("Choose a different nick\n");
 				client.exit();
@@ -26,19 +26,11 @@ public class SocketHandler extends Thread{
 				}
 			
 			//sending all nicks to all
-			String nicks = "*";
-			
-			for(Client client : Main.clientContainer){
-				nicks+=client.getNick()+"*";
-			}
-				
-			for(Client client : Main.clientContainer){
-				client.getDataOutputStream().writeBytes(nicks+"\n");
-			}
+			sendNicksToAll();
 				
 			
 			//main loop
-			client.getDataOutputStream().writeBytes("Welcome to the echo server. Type quit to exit\n");
+			client.getDataOutputStream().writeBytes("Welcome to the chat server. Type quit to exit\n");
 			while(((line=client.getBufferedReader().readLine())!=null)&&!line.equals("quit")){
 				for(Client client : Main.clientContainer){
 					client.getDataOutputStream().writeBytes(this.client.getNick()+": "+line+"\n");
@@ -46,11 +38,10 @@ public class SocketHandler extends Thread{
 			}
 			//exiting
 			
-			for(Client client : Main.clientContainer){
-				client.getDataOutputStream().writeBytes("**"+this.client.getNick()+"\n");
-			}
-			client.exit();
 			Main.clientContainer.remove(this.client);
+			sendNicksToAll();
+			client.exit();
+			
 			
 		}
 		catch(IOException e){
@@ -59,6 +50,19 @@ public class SocketHandler extends Thread{
 		}
 		Main.log.info("Exiting thread");
 		interrupt();
+	}
+
+
+	private void sendNicksToAll() throws IOException {
+		String nicks = "*";
+		
+		for(Client client : Main.clientContainer){
+			nicks+=client.getNick()+"*";
+		}
+			
+		for(Client client : Main.clientContainer){
+			client.getDataOutputStream().writeBytes(nicks+"\n");
+		}
 	}
 	
 	

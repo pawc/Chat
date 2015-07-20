@@ -56,6 +56,7 @@ public class Main {
 						System.out.printf(client.toString()+", ");
 						System.out.println();
 					}
+					break;
 				}
 				
 				case "shutdown" : {
@@ -65,7 +66,9 @@ public class Main {
 					System.out.println("Server shutdown");
 					sc.close();
 					System.exit(0);
+					
 				}
+				
 				
 			}
 			

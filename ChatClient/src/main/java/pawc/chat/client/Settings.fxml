@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="160.0" prefWidth="220.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="pawc.chat.client.controller.SettingsController">
+   <children>
+      <Label layoutX="32.0" layoutY="27.0" prefHeight="20.0" prefWidth="50.0" text="Nick:" />
+      <Label layoutX="32.0" layoutY="71.0" prefHeight="20.0" prefWidth="50.0" text="Host:" />
+      <Label layoutX="32.0" layoutY="115.0" prefHeight="20.0" prefWidth="50.0" text="Port:" />
+      <TextField fx:id="nickfield" layoutX="99.0" layoutY="24.0" prefHeight="15.0" prefWidth="90.0" />
+      <TextField fx:id="hostfield" layoutX="99.0" layoutY="68.0" prefHeight="15.0" prefWidth="90.0" />
+      <TextField fx:id="portfield" layoutX="99.0" layoutY="112.0" prefHeight="15.0" prefWidth="90.0" />
+   </children>
+   <effect>
+      <Glow level="0.0" />
+   </effect>
+</AnchorPane>
