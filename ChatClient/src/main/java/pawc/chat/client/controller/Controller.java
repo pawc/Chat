@@ -7,6 +7,8 @@ import java.io.IOException;
 
 import java.net.Socket;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -41,6 +43,8 @@ public class Controller {
     @FXML private MenuItem quit;
     
     @FXML private MenuItem about;
+    
+    protected ObservableList<String> observableList;
   
     protected static String nick = "";
     protected static String host = "localhost";
@@ -52,6 +56,9 @@ public class Controller {
 
     
     public void initialize(){
+    	
+    	observableList = FXCollections.observableArrayList();
+    	list.setItems(observableList);
     	
     	area.setText("Welcome to ChatClient. Edit nick, host and port"
     			+ " in Chat->Settings. \nTo connect click Chat->Connect\n");

@@ -61,16 +61,16 @@ public class Connection extends Thread {
 	    			
 		    			try{
 		    				line = controller.bfr.readLine();
-			    			//if(line.startsWith("*")) handleNicks();
-			    			//else{
+		    				//if(line!=null&&controller.connected&&line.startsWith("-")) handleNicks(line);
+				    		
+			    			if(line!=null) controller.log(line);
 			    			
-			    			//}
 		    			}
 		    			catch(NullPointerException e){
 		    				break;
 		    			}
-		    			
-	    			if(line!=null) controller.log(line);
+		    	    
+		    		
 	    			
 	    		}
 	    		
@@ -85,11 +85,15 @@ public class Connection extends Thread {
 	    		return;
 	    	}
 	}
-	
-	public void handleNicks(){
-		
+	/*
+	public void handleNicks(String line){
+		String[] nicks = line.split("-");
+		controller.observableList.clear();
+		for(int i=1; i<nicks.length; i++){
+			controller.observableList.add(nicks[i]);
+		}
 	}
-	
+	*/
 	
 
 }

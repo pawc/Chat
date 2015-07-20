@@ -17,7 +17,7 @@ public class SocketHandler extends Thread{
 		try{
 			//retreiving nick
 			String nick = client.getBufferedReader().readLine();
-			if(!nick.contains("*")) client.setNick(nick);
+			if(!nick.contains("-")) client.setNick(nick);
 			else{
 				client.getDataOutputStream().writeBytes("Choose a different nick\n");
 				client.exit();
@@ -54,10 +54,10 @@ public class SocketHandler extends Thread{
 
 
 	private void sendNicksToAll() throws IOException {
-		String nicks = "*";
+		String nicks = "-";
 		
 		for(Client client : Main.clientContainer){
-			nicks+=client.getNick()+"*";
+			nicks+=client.getNick()+"-";
 		}
 			
 		for(Client client : Main.clientContainer){
