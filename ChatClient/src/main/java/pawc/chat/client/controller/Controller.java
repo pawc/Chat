@@ -1,4 +1,4 @@
-package pawc.chat.client;
+package pawc.chat.client.controller;
 
 
 import javafx.event.Event;
