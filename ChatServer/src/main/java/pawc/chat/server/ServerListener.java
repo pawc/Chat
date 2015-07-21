@@ -24,7 +24,7 @@ public class ServerListener extends Thread {
 				Client client = new Client(socket);
 				SocketHandler socketHandler = new SocketHandler(client);
 				
-				Main.clientThreadsContainer.add(socketHandler);
+				Main.clientContainer.add(client);
 				socketHandler.start();
 				
 			;
