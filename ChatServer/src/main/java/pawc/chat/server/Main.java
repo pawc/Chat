@@ -36,6 +36,7 @@ public class Main {
 			System.exit(0);
 		}
 		
+		
 		new ServerListener(serverSocket).start();
 		
 		log.info("Server started. Awaiting connections...");
@@ -66,7 +67,18 @@ public class Main {
 					System.out.println("Server shutdown");
 					sc.close();
 					System.exit(0);
-					
+					break;
+				}
+				
+				case "broadcast" : {
+					for(Client client : clientContainer){
+						try{
+							client.getDataOutputStream().writeBytes("-raz-dwa-trzy*");
+						}
+						catch(IOException e){
+							log.info("Couldn't send broadcast to "+client.getSocket().getInetAddress().toString());
+						}
+					}
 				}
 				
 				

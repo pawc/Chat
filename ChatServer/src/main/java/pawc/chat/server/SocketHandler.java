@@ -24,11 +24,7 @@ public class SocketHandler extends Thread{
 				Main.clientContainer.remove(this.client);
 				this.interrupt();
 				}
-			
-			//sending all nicks to all
 			sendNicksToAll();
-				
-			
 			//main loop
 			client.getDataOutputStream().writeBytes("Welcome to the chat server. Type quit to exit\n");
 			while(((line=client.getBufferedReader().readLine())!=null)&&!line.equals("quit")){
@@ -53,15 +49,19 @@ public class SocketHandler extends Thread{
 	}
 
 
-	private void sendNicksToAll() throws IOException {
+	public void sendNicksToAll(){
 		String nicks = "-";
-		
 		for(Client client : Main.clientContainer){
 			nicks+=client.getNick()+"-";
 		}
-			
 		for(Client client : Main.clientContainer){
-			client.getDataOutputStream().writeBytes(nicks+"\n");
+			try{
+				client.getDataOutputStream().writeBytes(nicks+"\n");
+			}
+			catch(IOException e){
+				Main.log.warning("Couldn't send nicks to "+client.getSocket().getInetAddress());
+				continue;
+			}
 		}
 	}
 	
