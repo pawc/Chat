@@ -41,8 +41,6 @@ public class Controller {
     
     @FXML private MenuItem connect;
     @FXML private MenuItem settings;
-    @FXML private MenuItem quit;
-    
     @FXML private MenuItem about;
     
     protected ObservableList<String> observableList;

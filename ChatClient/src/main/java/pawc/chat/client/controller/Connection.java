@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.util.GregorianCalendar;
 
 import pawc.chat.client.controller.Controller;
 
@@ -53,9 +54,11 @@ public class Connection extends Thread {
 	    	}
 	    
 	    	try{
-	    		controller.out.writeBytes(controller.nick+"\n"); // moze byc problem z \n
+	    		controller.out.writeBytes(controller.nick+"\n");
 	    		controller.connected=true;
 	    		String line = "";
+	    		
+	    	
 	    		
 	    		while(controller.connected&&line!=null){
 	    			
@@ -63,7 +66,9 @@ public class Connection extends Thread {
 		    				line = controller.bfr.readLine();
 		    				if(line!=null&&controller.connected&&line.startsWith("-")) handleNicks(line);
 		    				else{
-		    					controller.log(line);
+		    					GregorianCalendar calendar = new GregorianCalendar();
+		    			    	String time = "["+calendar.getTime().getHours()+":"+calendar.getTime().getMinutes()+"] ";
+		    					controller.log(time+line);
 		    				}
 			    			
 		    			}
@@ -89,7 +94,6 @@ public class Connection extends Thread {
 	
 	
 	public void handleNicks(String line){
-		//controller.log("nicki"+line);
 		
 		String[] nicks = line.split("-");
 		

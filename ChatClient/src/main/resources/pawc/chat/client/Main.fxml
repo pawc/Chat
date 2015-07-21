@@ -22,7 +22,6 @@
             <items>
               <MenuItem fx:id="connect" mnemonicParsing="false" text="Connect" />
                   <MenuItem fx:id="settings" mnemonicParsing="false" text="Settings" />
-                  <MenuItem fx:id="quit" mnemonicParsing="false" text="Quit" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
