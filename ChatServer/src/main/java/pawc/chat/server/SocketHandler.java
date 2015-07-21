@@ -21,20 +21,21 @@ public class SocketHandler extends Thread{
 			else{
 				client.getDataOutputStream().writeBytes("Choose a different nick\n");
 				client.exit();
-				Main.clientContainer.remove(this.client);
+				Main.clientThreadsContainer.remove(this);
 				this.interrupt();
 				}
 			sendNicksToAll();
 			//main loop
 			client.getDataOutputStream().writeBytes("Welcome to the chat server. Type quit to exit\n");
 			while(((line=client.getBufferedReader().readLine())!=null)&&!line.equals("quit")){
-				for(Client client : Main.clientContainer){
-					client.getDataOutputStream().writeBytes(this.client.getNick()+": "+line+"\n");
+				for(SocketHandler socketHandler : Main.clientThreadsContainer){
+					socketHandler.getClient().getDataOutputStream().writeBytes(this.client.getNick()+": "+line+"\n");
+					//client.getDataOutputStream().writeBytes(this.client.getNick()+": "+line+"\n");
 				}
 			}
 			//exiting
 			
-			Main.clientContainer.remove(this.client);
+			Main.clientThreadsContainer.remove(this);
 			sendNicksToAll();
 			client.exit();
 			
@@ -51,19 +52,22 @@ public class SocketHandler extends Thread{
 
 	public void sendNicksToAll(){
 		String nicks = "-";
-		for(Client client : Main.clientContainer){
-			nicks+=client.getNick()+"-";
+		for(SocketHandler socketHandler : Main.clientThreadsContainer){
+			nicks+=socketHandler.getClient().getNick()+"-";
 		}
-		for(Client client : Main.clientContainer){
+		for(SocketHandler socketHandler : Main.clientThreadsContainer){
 			try{
-				client.getDataOutputStream().writeBytes(nicks+"\n");
+				socketHandler.getClient().getDataOutputStream().writeBytes(nicks+"\n");
 			}
 			catch(IOException e){
-				Main.log.warning("Couldn't send nicks to "+client.getSocket().getInetAddress());
+				Main.log.warning("Couldn't send nicks to "+socketHandler.getClient().getSocket().getInetAddress());
 				continue;
 			}
 		}
 	}
 	
+	public Client getClient(){
+		return client;
+	}
 	
 }

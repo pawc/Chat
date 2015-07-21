@@ -12,7 +12,7 @@ public class Main {
 	
 	public static Logger log = Logger.getLogger("Main Server");
 	protected static ServerSocket serverSocket = null;
-	protected static ArrayList<Client> clientContainer = new ArrayList<Client>();
+	protected static ArrayList<SocketHandler> clientThreadsContainer = new ArrayList<SocketHandler>();
 	
 	public static void main(String args[]){
 		
@@ -46,7 +46,7 @@ public class Main {
 		String line = "";
 		
 		while(true){
-			
+			/*
 			try{
 			line = sc.nextLine();
 			}
@@ -83,7 +83,7 @@ public class Main {
 				
 				
 			}
-			
+		*/	
 		}
 
 		

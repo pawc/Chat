@@ -22,8 +22,11 @@ public class ServerListener extends Thread {
 				Main.log.info("new connection from "+socket.getInetAddress().toString());
 				
 				Client client = new Client(socket);
-				Main.clientContainer.add(client);
-				new SocketHandler(client).start();
+				SocketHandler socketHandler = new SocketHandler(client);
+				
+				Main.clientThreadsContainer.add(socketHandler);
+				socketHandler.start();
+				
 			;
 			}
 			catch(IOException e){
