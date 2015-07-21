@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import java.net.Socket;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -107,6 +108,27 @@ public class Controller {
     	
     }
     
+    public void addNick(String nick){
+    	Platform.runLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				observableList.add(nick);
+				
+			}
+		});
+    }
+    
+    public void removeNicks(){
+    	Platform.runLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				observableList.clear();
+				
+			}
+		});
+    }
     
     
     public void log(String string){
