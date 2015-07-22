@@ -24,6 +24,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import pawc.chat.client.Main;
 
 
 
@@ -107,7 +108,7 @@ public class Controller {
     	about.setOnAction(event->{
     		AnchorPane aboutPane;
     		try{
-    			aboutPane = FXMLLoader.load(Controller.class.getResource("About.fxml"));
+    			aboutPane = FXMLLoader.load(Main.class.getResource("About.fxml"));
     		}
     		catch(IOException e){
     			log("Couldn't load about pane: "+e.toString());
