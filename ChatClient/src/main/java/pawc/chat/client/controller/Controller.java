@@ -63,6 +63,7 @@ public class Controller {
     	area.setText("Welcome to ChatClient. Edit nick, host and port"
     			+ " in Chat->Settings. \nTo connect click Chat->Connect\n");
     	area.setEditable(false);
+    	area.wrapTextProperty().set(true);
     	
     	field.setOnKeyPressed(new EventHandler<KeyEvent>(){
     		
