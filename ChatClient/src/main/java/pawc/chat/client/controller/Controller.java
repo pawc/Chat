@@ -91,7 +91,7 @@ public class Controller {
     	settings.setOnAction(event->{
     		AnchorPane settingsPane;
     		try {
-				settingsPane = (AnchorPane) FXMLLoader.load(Controller.class.getResource("Settings.fxml"));
+				settingsPane = (AnchorPane) FXMLLoader.load(Main.class.getResource("controller/Settings.fxml"));
 			} catch (IOException e) {
 				log("Couldn't load settings pane: "+e.toString());
 				return;

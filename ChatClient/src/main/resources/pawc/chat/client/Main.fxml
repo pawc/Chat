@@ -10,7 +10,7 @@
       <TextArea fx:id="area" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </center>
    <right>
-      <ListView fx:id="list" prefHeight="200.0" prefWidth="80.0" BorderPane.alignment="CENTER" />
+      <ListView fx:id="list" prefHeight="200.0" prefWidth="110.0" BorderPane.alignment="CENTER" />
    </right>
    <bottom>
       <TextField fx:id="field" BorderPane.alignment="CENTER" />

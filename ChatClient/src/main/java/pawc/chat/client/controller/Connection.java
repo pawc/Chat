@@ -66,9 +66,11 @@ public class Connection extends Thread {
 		    				line = controller.bfr.readLine();
 		    				if(line!=null&&controller.connected&&line.startsWith("-")) handleNicks(line);
 		    				else{
-		    					GregorianCalendar calendar = new GregorianCalendar();
-		    			    	String time = "["+calendar.getTime().getHours()+":"+calendar.getTime().getMinutes()+"] ";
-		    					controller.log(time+line);
+		    					if(line!=null){
+			    					GregorianCalendar calendar = new GregorianCalendar();
+			    			    	String time = "["+calendar.getTime().getHours()+":"+calendar.getTime().getMinutes()+"] ";
+			    					controller.log(time+line);
+		    					}
 		    				}
 			    			
 		    			}
@@ -81,6 +83,7 @@ public class Connection extends Thread {
 	    		}
 	    		
 	    		controller.log("Disconnected from the server");
+	    		controller.removeNicks();
 	    		controller.connected=false;
 	    		
 	    	}
