@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="100.0" prefWidth="250.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+   <children>
+      <Label layoutX="83.0" layoutY="14.0" text="ChatClient" />
+      <Label layoutX="8.0" layoutY="43.0" text="author: pawc (pswid89@gmail.com)" />
+      <Label layoutX="52.0" layoutY="71.0" text="github.com/pawc/Chat" />
+   </children>
+</AnchorPane>

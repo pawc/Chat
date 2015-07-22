@@ -45,8 +45,8 @@ public class Controller {
     
     protected ObservableList<String> observableList;
   
-    protected static String nick = "";
-    protected static String host = "localhost";
+    protected static String nick = "guest";	
+    protected static String host = "pawc.ddns.net";
     protected static int port = 3000;
     protected Socket socket;
     protected BufferedReader bfr;
@@ -101,6 +101,24 @@ public class Controller {
     		stage.setScene(scene);
     		stage.show();
     		
+    		
+    	});
+    	
+    	about.setOnAction(event->{
+    		AnchorPane aboutPane;
+    		try{
+    			aboutPane = FXMLLoader.load(Controller.class.getResource("About.fxml"));
+    		}
+    		catch(IOException e){
+    			log("Couldn't load about pane: "+e.toString());
+    			return;
+    		}
+    		Scene scene = new Scene(aboutPane);
+    		Stage stage = new Stage();
+    		stage.setTitle("About");
+    		stage.setResizable(false);
+    		stage.setScene(scene);
+    		stage.show();
     		
     	});
     	
