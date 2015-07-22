@@ -1,4 +1,6 @@
-package pawc.chat.client;
+package pawc.chat.client.controller;
+
+import org.mockito.Mockito;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -7,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Unit test for simple App.
  */
-public class AppTest 
+public class ConnectionTest 
     extends TestCase
 {
     /**
@@ -15,7 +17,7 @@ public class AppTest
      *
      * @param testName name of the test case
      */
-    public AppTest( String testName )
+    public ConnectionTest( String testName )
     {
         super( testName );
     }
@@ -25,14 +27,18 @@ public class AppTest
      */
     public static Test suite()
     {
-        return new TestSuite( AppTest.class );
+        return new TestSuite( ConnectionTest.class );
     }
 
     /**
      * Rigourous Test :-)
      */
-    public void testApp()
+    public void testConnection()
     {
-        assertTrue( true );
+    	Controller controller = Mockito.mock(Controller.class);
+    	Connection connection = new Connection(controller);
+    	assertTrue(connection instanceof Connection);
+    	
+    	
     }
 }

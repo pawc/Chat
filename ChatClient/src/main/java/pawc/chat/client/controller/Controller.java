@@ -152,7 +152,7 @@ public class Controller {
     public void log(String string){
     	area.appendText(string+"\n");
     }
-    
+    /*
     protected String getNick(){
     	return nick;
     }
@@ -160,7 +160,7 @@ public class Controller {
     protected String getHost(){
     	return host;
     }
-
+*/
     
 }
         
