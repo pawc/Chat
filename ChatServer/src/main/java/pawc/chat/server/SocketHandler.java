@@ -20,10 +20,12 @@ public class SocketHandler extends Thread{
 	
 	
 	public void run(){
-
-	  try{
-	   while(true){
-	       ObjectInputStream input = new ObjectInputStream(client.getSocket().getInputStream());
+	 try{   
+	    ObjectInputStream input = new ObjectInputStream(client.getSocket().getInputStream());
+	    
+	  
+	   while(input!=null){
+	      
 	       Data data = (Data) input.readObject();
 	           switch(data.getCommand()){
 	           case "introduction" :
@@ -36,9 +38,14 @@ public class SocketHandler extends Thread{
 	               
 	           }
 	   }
+	   
+	   Main.log.info("Client exited");
+       client.exit();
+       Main.clientContainer.remove(client);
+	   
 	  }
 	  catch(Exception e){
-	      Main.log.warning("Some error. Try to reconnect");
+	      Main.log.warning(e.toString());
 	      client.exit();
 	      Main.clientContainer.remove(client);
 	  }

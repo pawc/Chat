@@ -42,72 +42,9 @@ public class Connection extends Thread {
 	    		controller.log(e.toString());
 	    		return;
 	    	}
-	    	try{
-	    		controller.log("Connected to the host. Initializing streams");
-	    		controller.bfr = new BufferedReader(new InputStreamReader(controller.socket.getInputStream()));
-	    		controller.out = new DataOutputStream(controller.socket.getOutputStream());
-	    	}
-	    	catch(IOException e){
-	    		controller.log("Couldn't initialize streams");
-	    		controller.log(e.toString());
-	    		return;
-	    	}
-	    
-	    	try{
-	    		controller.out.writeBytes(controller.nick+"\n");
-	    		controller.connected=true;
-	    		String line = "";
-	    		
 	    	
-	    		
-	    		while(controller.connected&&line!=null){
-	    			
-		    			try{
-		    				line = controller.bfr.readLine();
-		    				if(line!=null&&controller.connected&&line.startsWith("-")) handleNicks(line);
-		    				else{
-		    					if(line!=null){
-			    					GregorianCalendar calendar = new GregorianCalendar();
-			    			    	String time = "["+calendar.getTime().getHours()+":"+calendar.getTime().getMinutes()+"] ";
-			    					controller.log(time+line);
-		    					}
-		    				}
-			    			
-		    			}
-		    			catch(NullPointerException e){
-		    				break;
-		    			}
-		    	    
-		    		
-	    			
-	    		}
-	    		
-	    		controller.log("Disconnected from the server");
-	    		controller.removeNicks();
-	    		controller.connected=false;
-	    		
-	    	}
-	    	catch(IOException e){
-	    		controller.log("Error. Connect again");
-	    		controller.log(e.toString());
-	    		controller.connected = false;
-	    		return;
-	    	}
+	    	  
+	
+	
 	}
-	
-	
-	public void handleNicks(String line){
-		
-		String[] nicks = line.split("-");
-		
-		controller.removeNicks();
-		for(int i=1; i<nicks.length; i++){
-			controller.addNick(nicks[i]);
-		}
-		controller.list.setItems(controller.observableList);
-		
-	}
-	
-	
-
 }
