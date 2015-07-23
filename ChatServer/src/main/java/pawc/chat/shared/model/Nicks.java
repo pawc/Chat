@@ -2,11 +2,11 @@ package pawc.chat.shared.model;
 
 import java.util.List;
 
-public class NicksList {
+public class Nicks {
 
     private List nicks;
     
-    public NicksList(List nicks){
+    public Nicks(List nicks){
         this.nicks=nicks;
     }
     

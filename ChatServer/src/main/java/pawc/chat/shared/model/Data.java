@@ -2,12 +2,12 @@ package pawc.chat.shared.model;
 
 import java.util.List;
 
-public class Response {
+public class Data {
     
     private String command;
     private List arguments;
 
-    public Response(String command, List arguments){
+    public Data(String command, List arguments){
         this.command=command;
         this.arguments=arguments;
     }
