@@ -70,16 +70,7 @@ public class Main {
 					break;
 				}
 				
-				case "broadcast" : {
-					for(Client client : clientContainer){
-						try{
-							client.getDataOutputStream().writeBytes("-raz-dwa-trzy*");
-						}
-						catch(IOException e){
-							log.info("Couldn't send broadcast to "+client.getSocket().getInetAddress().toString());
-						}
-					}
-				}
+				
 				
 				
 			}
