@@ -36,17 +36,15 @@ public class Main {
 			System.exit(0);
 		}
 		
-		
 		new ServerListener(serverSocket).start();
 		
 		log.info("Server started. Awaiting connections...");
 		
-		
-		Scanner sc = new Scanner(System.in);
-		String line = "";
+		//Scanner sc = new Scanner(System.in);
+		//String line = "";
 		
 		while(true){
-			
+			/*
 			try{
 			line = sc.nextLine();
 			}
@@ -74,10 +72,9 @@ public class Main {
 				
 				
 			}
-			
+		*/	
 		}
 
-		
 	}
 	
 }

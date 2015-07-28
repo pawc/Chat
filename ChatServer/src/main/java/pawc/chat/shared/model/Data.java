@@ -1,14 +1,13 @@
 package pawc.chat.shared.model;
 
 import java.io.Serializable;
-import java.util.List;
 
-public class Data implements Serializable{
+public class Data implements Serializable {
+
+    String command;
+    Object arguments;
     
-    private String command;
-    private List arguments;
-
-    public Data(String command, List arguments){
+    public Data(String command, Object arguments){
         this.command=command;
         this.arguments=arguments;
     }
@@ -17,7 +16,7 @@ public class Data implements Serializable{
         return command;
     }
     
-    public List getArguments(){
+    public Object getArguments(){
         return arguments;
     }
     

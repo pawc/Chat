@@ -8,7 +8,6 @@ import java.util.List;
 
 import pawc.chat.server.model.Client;
 import pawc.chat.shared.model.Data;
-import pawc.chat.shared.model.Message;
 
 public class SocketHandler extends Thread{
 
@@ -18,33 +17,29 @@ public class SocketHandler extends Thread{
 		this.client=client;
 	}
 	
-	
 	public void run(){
 	 try{   
-	    ObjectInputStream input = new ObjectInputStream(client.getSocket().getInputStream());
-	    
-	  
-	   while(input!=null){
+	   ObjectInputStream in = new ObjectInputStream(client.getSocket().getInputStream());
+	   
+	   while(true){
 	      
-	       Data data = (Data) input.readObject();
-	           switch(data.getCommand()){
+	       Data data = (Data) in.readObject();
+	       String command = data.getCommand();
+	           switch(command){
 	           case "introduction" :
-	               client.setNick(data.getArguments().get(0).toString());
+	               client.setNick((String) data.getArguments());
+	               sendNicksToAll();
 	               break;
 	           
 	           case "message" :
-	               sendMessageToAll(data.getArguments().get(0).toString());
+	               sendMessageToAll((String) data.getArguments());
 	               break;
-	               
 	           }
 	   }
 	   
-	   Main.log.info("Client exited");
-       client.exit();
-       Main.clientContainer.remove(client);
-	   
-	  }
-	  catch(Exception e){
+	 }
+	  catch(IOException | ClassNotFoundException | NullPointerException e){
+	      Main.log.info("Disconnecting client "+client.getNick());
 	      Main.log.warning(e.toString());
 	      client.exit();
 	      Main.clientContainer.remove(client);
@@ -54,10 +49,8 @@ public class SocketHandler extends Thread{
 	}
 	
 	private void sendMessageToAll(String message){
-	    List list = new ArrayList<Message>();
-	    Message messageObject = new Message(message, this.client.getNick());
-	    list.add(messageObject);
-	    Data data = new Data("message", list);
+	    
+	    Data data = new Data("message", message);
 	    
         for(Client client : Main.clientContainer){
             try{

@@ -4,8 +4,10 @@ package pawc.chat.client.controller;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
-
+import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -25,12 +27,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import pawc.chat.client.Main;
-
-
+import pawc.chat.shared.model.Data;
 
 public class Controller {
 
-    
     @FXML
     protected TextArea area;
     
@@ -50,8 +50,6 @@ public class Controller {
     protected static String host = "pawc.ddns.net";
     protected static int port = 3000;
     protected Socket socket;
-    protected BufferedReader bfr;
-    protected DataOutputStream out;
     protected boolean connected = false;
 
     
@@ -71,16 +69,20 @@ public class Controller {
     			if(connected&&!field.getText().equals("")){
 	    			if(e.getCode()==KeyCode.ENTER){
 	    				try{
-	    				out.writeBytes(field.getText()+"\n");
+	    				    ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+	    				    List<String> arguments = new ArrayList<String>();
+	    				    arguments.add(field.getText());
+	    				    Data data = new Data("message", arguments);	
+	    				    out.writeObject(data);
+	    				    out.close();
 	    				}
-	    				catch(IOException error){
-	    					log("Couldn't send a message");
-	    					log(error.toString());
+	    				catch(IOException er){
+	    				    log("Error sending message");
+	    				    log(er.toString());
 	    				}
-	    				field.setText("");
 	    			}
     			}
-    			//else{log("Blank input or not connected to the server");}
+    		
     		}
     	});
     	
@@ -126,12 +128,14 @@ public class Controller {
     	
     }
     
-    public void addNick(String nick){
+    public void addNicks(List<String> nicks){
     	Platform.runLater(new Runnable() {
 			
 			@Override
 			public void run() {
-				observableList.add(nick);
+				for(String nick : nicks){
+				    observableList.add(nick);
+				}
 				
 			}
 		});
@@ -152,15 +156,11 @@ public class Controller {
     public void log(String string){
     	area.appendText(string+"\n");
     }
-    /*
-    protected String getNick(){
-    	return nick;
-    }
     
-    protected String getHost(){
-    	return host;
+    public Socket getSocket(){
+        return socket;
     }
-*/
+
     
 }
         

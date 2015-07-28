@@ -26,7 +26,7 @@ public class ServerListener extends Thread {
 				
 				Main.clientContainer.add(client);
 				socketHandler.start();
-				
+				Main.log.info("thread for the new connection started");
 			;
 			}
 			catch(IOException e){
