@@ -51,8 +51,11 @@ public class Connection extends Thread {
 	    	ObjectOutputStream out;
 	    	
 	    	try{
-	    	in = new ObjectInputStream(controller.getSocket().getInputStream());
 	    	out = new ObjectOutputStream(controller.getSocket().getOutputStream());
+	    	out.flush();
+	    	in = new ObjectInputStream(controller.getSocket().getInputStream());
+	    	
+	    	
 	    	}
 	    	catch(IOException e){
     	        controller.log("Couldn't initialize streams");
@@ -60,7 +63,6 @@ public class Connection extends Thread {
                 return; 
 	    	}
 	    	controller.log("Streams initialized");
-	    	
 	    	
 	    	Data dataNick = new Data("introduction", controller.nick);
 	    	

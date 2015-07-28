@@ -1,6 +1,8 @@
 package pawc.chat.server.model;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import pawc.chat.server.Main;
@@ -9,6 +11,8 @@ public class Client {
 	
 	private String nick;
 	private Socket socket;
+	public ObjectOutputStream out;
+	public ObjectInputStream in;
 
 	
 	public Client(Socket socket){

@@ -18,12 +18,14 @@ public class SocketHandler extends Thread{
 	}
 	
 	public void run(){
-	 try{   
-	   ObjectInputStream in = new ObjectInputStream(client.getSocket().getInputStream());
+	 try{ 
+	   client.out = new ObjectOutputStream(client.getSocket().getOutputStream());
+	   client.out.flush();
+	   client.in = new ObjectInputStream(client.getSocket().getInputStream());
 	   
 	   while(true){
 	      
-	       Data data = (Data) in.readObject();
+	       Data data = (Data) client.in.readObject();
 	       String command = data.getCommand();
 	           switch(command){
 	           case "introduction" :
@@ -54,9 +56,8 @@ public class SocketHandler extends Thread{
 	    
         for(Client client : Main.clientContainer){
             try{
-            ObjectOutputStream objectOut = new ObjectOutputStream(client.getSocket().getOutputStream());
-            objectOut.writeObject(data);
-            objectOut.close();
+                client.out.writeObject(data);
+                client.out.flush();
             }
             catch(IOException e){
                 Main.log.warning("Error sending message from "+this.client.getNick()+" to: "+client.getNick());
@@ -76,12 +77,12 @@ public class SocketHandler extends Thread{
 	    
 	    for(Client client : Main.clientContainer){
 	        try{
-            ObjectOutputStream objectOut = new ObjectOutputStream(client.getSocket().getOutputStream());
-            objectOut.writeObject(data);
-            objectOut.close();
+	            client.out.writeObject(data);
+	            client.out.flush();
 	        }
 	        catch(IOException e){
 	            Main.log.warning("Error sending nicks list to: "+client.getNick());
+	            e.printStackTrace();
 	            continue;
 	        }
         }

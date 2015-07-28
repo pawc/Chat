@@ -63,17 +63,17 @@ public class Controller {
     	area.setEditable(false);
     	area.wrapTextProperty().set(true);
     	
-    	field.setOnKeyPressed(new EventHandler<KeyEvent>(){
+    	/*field.setOnKeyPressed(new EventHandler<KeyEvent>(){
     		
     		public void handle(KeyEvent e){
     			if(connected&&!field.getText().equals("")){
 	    			if(e.getCode()==KeyCode.ENTER){
 	    				try{
-	    				    ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 	    				    List<String> arguments = new ArrayList<String>();
 	    				    arguments.add(field.getText());
 	    				    Data data = new Data("message", arguments);	
-	    				    out.writeObject(data);
+	    				    clienout.writeObject(data);
+	    				    out.flush();
 	    				    out.close();
 	    				}
 	    				catch(IOException er){
@@ -85,7 +85,7 @@ public class Controller {
     		
     		}
     	});
-    	
+    	*/
     	connect.setOnAction(event->{
     		new Connection(this).start();
     	});
