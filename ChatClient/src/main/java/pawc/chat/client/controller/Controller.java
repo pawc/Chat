@@ -47,9 +47,10 @@ public class Controller {
     protected ObservableList<String> observableList;
   
     protected static String nick = "guest";	
-    protected static String host = "pawc.ddns.net";
+    protected static String host = "localhost";
     protected static int port = 3000;
     protected Socket socket;
+    protected ObjectOutputStream out = null;
     protected boolean connected = false;
 
     
@@ -63,18 +64,18 @@ public class Controller {
     	area.setEditable(false);
     	area.wrapTextProperty().set(true);
     	
-    	/*field.setOnKeyPressed(new EventHandler<KeyEvent>(){
+    	field.setOnKeyPressed(new EventHandler<KeyEvent>(){
     		
     		public void handle(KeyEvent e){
     			if(connected&&!field.getText().equals("")){
 	    			if(e.getCode()==KeyCode.ENTER){
 	    				try{
-	    				    List<String> arguments = new ArrayList<String>();
-	    				    arguments.add(field.getText());
+	    				    String arguments = nick+": "+field.getText()+"\n";
 	    				    Data data = new Data("message", arguments);	
-	    				    clienout.writeObject(data);
+	    				    out.writeObject(data);
 	    				    out.flush();
-	    				    out.close();
+	    				    field.setText("");
+	    				    
 	    				}
 	    				catch(IOException er){
 	    				    log("Error sending message");
@@ -85,7 +86,7 @@ public class Controller {
     		
     		}
     	});
-    	*/
+    	
     	connect.setOnAction(event->{
     		new Connection(this).start();
     	});

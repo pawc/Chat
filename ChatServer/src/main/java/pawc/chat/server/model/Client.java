@@ -18,6 +18,18 @@ public class Client {
 	public Client(Socket socket){
 		nick = "";
 		this.socket=socket;
+		Main.log.info("Initializing streams for client "+socket.getInetAddress().getHostAddress().toString());
+		try{
+		    out = new ObjectOutputStream(socket.getOutputStream());
+		    out.flush();
+		    in = new ObjectInputStream(socket.getInputStream());
+		}
+		catch(IOException e){
+		    Main.log.warning("Error initializing streams");
+		    out = null;
+		    in = null;
+		}
+		Main.log.info("Streams initialized.");
 	}
 	
     public boolean exit(){

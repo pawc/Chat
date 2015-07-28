@@ -18,33 +18,28 @@ public class SocketHandler extends Thread{
 	}
 	
 	public void run(){
-	 try{ 
-	   client.out = new ObjectOutputStream(client.getSocket().getOutputStream());
-	   client.out.flush();
-	   client.in = new ObjectInputStream(client.getSocket().getInputStream());
-	   
-	   while(true){
-	      
-	       Data data = (Data) client.in.readObject();
-	       String command = data.getCommand();
-	           switch(command){
-	           case "introduction" :
-	               client.setNick((String) data.getArguments());
-	               sendNicksToAll();
-	               break;
-	           
-	           case "message" :
-	               sendMessageToAll((String) data.getArguments());
-	               break;
-	           }
-	   }
-	   
+	 try{
+    	   while(true){
+    	       Data data = (Data) client.in.readObject();
+    	       String command = data.getCommand();
+    	           switch(command){
+    	           case "introduction" :
+    	               client.setNick((String) data.getArguments());
+    	               sendNicksToAll();
+    	               break;
+    	           
+    	           case "message" :
+    	               sendMessageToAll((String) data.getArguments());
+    	               break;
+    	           }
+    	   }
 	 }
-	  catch(IOException | ClassNotFoundException | NullPointerException e){
+	  catch(IOException | ClassNotFoundException e){
 	      Main.log.info("Disconnecting client "+client.getNick());
 	      Main.log.warning(e.toString());
 	      client.exit();
 	      Main.clientContainer.remove(client);
+	      sendNicksToAll();
 	  }
 	  this.interrupt();
 	    

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import pawc.chat.client.controller.Controller;
@@ -50,11 +51,12 @@ public class Connection extends Thread {
 	    	ObjectInputStream in;
 	    	ObjectOutputStream out;
 	    	
+	    	
 	    	try{
 	    	out = new ObjectOutputStream(controller.getSocket().getOutputStream());
 	    	out.flush();
 	    	in = new ObjectInputStream(controller.getSocket().getInputStream());
-	    	
+	    	controller.out = out;
 	    	
 	    	}
 	    	catch(IOException e){
@@ -68,12 +70,15 @@ public class Connection extends Thread {
 	    	
 	    	try{
 	    	    out.writeObject(dataNick);
-	    	    out.close();
 	    	    controller.log("Nick sent. Entering main loop");
     	    	while(controller.connected){
     	    	    Data data = (Data) in.readObject();
     	    	    String command = data.getCommand();
-    	    	    if(command.equals("message")) controller.area.appendText((String) data.getArguments());
+    	    	    GregorianCalendar calendar = new GregorianCalendar();
+    	    	    int hours = calendar.getTime().getHours();
+    	    	    int minutes = calendar.getTime().getMinutes();
+    	    	    String time = hours+":"+minutes;
+    	    	    if(command.equals("message")) controller.area.appendText(time+" "+(String) data.getArguments());
     	    	    if(command.equals("nicks")){
     	    	        controller.removeNicks();
     	    	        controller.addNicks((List) data.getArguments());
