@@ -1,6 +1,5 @@
 package pawc.chat.client.controller;
 
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
@@ -10,11 +9,18 @@ import javafx.scene.input.KeyEvent;
 
 public class PrivateMessagePaneController {
 
+    private String nick;
     @FXML TextArea area;
     @FXML TextField field;
     
+    public PrivateMessagePaneController(String nick){
+        this.nick=nick;
+    }
+    
     public void initialize(){
+        
         area.setEditable(false);
+        area.setText("chat with "+nick);
         
         field.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -28,6 +34,13 @@ public class PrivateMessagePaneController {
     
     }
     
+    public void setNick(String nick){
+        this.nick = nick;
+    }
+    
+    public String getNick(){
+        return nick;
+    }
     
     
 }
