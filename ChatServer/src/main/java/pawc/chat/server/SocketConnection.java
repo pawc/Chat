@@ -1,13 +1,15 @@
 package pawc.chat.server;
 
 
+import java.io.DataOutputStream;
 import java.io.IOException;
-
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import pawc.chat.server.model.Client;
 import pawc.chat.shared.model.Data;
+import pawc.chat.shared.model.PrivateMessage;
 
 public class SocketConnection extends Thread{
 
@@ -44,12 +46,21 @@ public class SocketConnection extends Thread{
     	           case "message" :
     	               sendMessageToAll((String) data.getArguments());
     	               break;
+    	           
+    	           
+    	           case "privateMessage" :
+    	               PrivateMessage privateMessage = (PrivateMessage) data.getArguments();
+    	               String recipient = privateMessage.getRecipient();
+    	               String sender = privateMessage.getSender();
+    	               sendMessageToNicks(sender, recipient, data);
+    	               break;
     	           }
     	   }
 	 }
 	  catch(IOException | ClassNotFoundException e){
 	      Main.log.info("Disconnecting client "+client.getNick());
 	      Main.log.warning(e.toString());
+	      e.printStackTrace();
 	      client.exit();
 	      Main.clientContainer.remove(client);
 	      sendNicksToAll();
@@ -76,6 +87,16 @@ public class SocketConnection extends Thread{
 	    
 	}
 	
+	
+	private void sendMessageToNicks(String nick1, String nick2, Data data) throws IOException{
+	    for(Client client : Main.clientContainer){
+	        if(client.getNick().equals(nick1)||client.getNick().equals(nick2)){
+	            client.out.writeObject(data);
+	            client.out.flush();	            
+	        }
+	    }
+	}
+	
 	private void sendNicksToAll(){
 	    List list = new ArrayList<String>();
 	    for(Client client : Main.clientContainer){
@@ -95,11 +116,21 @@ public class SocketConnection extends Thread{
 	        }
         }
     }
-	
+	/*
+	private ObjectOutputStream OOSofClientWithNick(String nick){
+	    ObjectOutputStream out = null;
+	    for(Client client : Main.clientContainer){
+	        if(client.getNick().equals(nick)) out = client.out;
+	        break;
+	    }
+	    return out;
+	}
+	*/
 	private boolean checkIfNickAlreadyInUse(String nick){
 	    boolean answer = false;
 	    for(Client client : Main.clientContainer){
 	        if(client.getNick().equals(nick)) answer = true;
+	        break;
 	    }
 	    return answer;
 	}

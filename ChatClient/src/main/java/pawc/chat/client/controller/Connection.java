@@ -10,6 +10,7 @@ import java.util.List;
 
 import pawc.chat.client.controller.Controller;
 import pawc.chat.shared.model.Data;
+import pawc.chat.shared.model.PrivateMessage;
 
 public class Connection extends Thread {
 	
@@ -87,6 +88,30 @@ public class Connection extends Thread {
     	    	        controller.area.appendText("Nick already in use. Choose a different one and reconnect\n");
     	    	        break;
     	    	    }
+    	    	    if(command.equals("privateMessage")){
+    	    	        PrivateMessage privateMessage = (PrivateMessage) data.getArguments();
+    	    	        String sender = privateMessage.getSender();
+    	    	        String recipient = privateMessage.getRecipient();
+    	    	        String message = privateMessage.getMessage();
+    	    	        if(controller.isPMalreadyOpened(sender)){
+    	    	            PrivateMessagePaneController c = returnPMcontrollerOfANick(sender);
+    	    	            if(c==null) controller.log("Error with PM controller of "+sender);
+    	    	            else{
+    	    	                c.appendToArea(time+" "+sender+": "+message);
+    	    	            }
+    	    	        }
+    	    	        else{
+    	    	            controller.openNewPrivateWindow(sender);
+    	    	            try {
+                                Thread.sleep(3000);
+                            } catch (InterruptedException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+    	    	            PrivateMessagePaneController c = returnPMcontrollerOfANick(sender);
+    	    	            c.appendToArea(time+" "+sender+": "+message);
+    	    	        }
+    	    	    }
     	    	}
     	    	out.close();
     	    	in.close();
@@ -95,9 +120,19 @@ public class Connection extends Thread {
 	    	}
 	    	catch(IOException | ClassNotFoundException | NullPointerException e){
 	    	    controller.log(e.toString());
+	    	    e.printStackTrace();
                 controller.connected=false;
                 return;
 	    	}
 	
+	}
+	
+	public PrivateMessagePaneController returnPMcontrollerOfANick(String nick){
+	    PrivateMessagePaneController contr = null;
+	    for(PrivateMessagePaneController c : Controller.privateMessagePaneControllerContainer){
+	        if(c.getNick().equals(nick)) contr=c;
+	        break;
+	    }
+	    return contr;
 	}
 }

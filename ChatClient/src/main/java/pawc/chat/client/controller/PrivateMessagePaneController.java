@@ -1,11 +1,15 @@
 package pawc.chat.client.controller;
 
+import java.io.IOException;
+
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import pawc.chat.shared.model.Data;
+import pawc.chat.shared.model.PrivateMessage;
 
 public class PrivateMessagePaneController {
 
@@ -25,8 +29,20 @@ public class PrivateMessagePaneController {
         field.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                if(event.getCode()==KeyCode.ENTER){
-                    
+                if(event.getCode()==KeyCode.ENTER&&!field.getText().equals("")){
+                    PrivateMessage privateMessage = new PrivateMessage(Controller.nick, nick, field.getText());
+                    Data data = new Data("privateMessage", privateMessage);
+                    try{
+                    Controller.out.writeObject(data);
+                    Controller.out.flush();
+                    field.setText("");
+                    }
+                    catch(IOException e){
+                        area.appendText("Couldn't send private message to "+nick+"\n");
+                        area.appendText(e.toString());
+                        e.printStackTrace();
+                        
+                    }
                 }
                 
             }
@@ -40,6 +56,10 @@ public class PrivateMessagePaneController {
     
     public String getNick(){
         return nick;
+    }
+    
+    public void appendToArea(String message){
+        area.appendText(message+"\n");
     }
     
     

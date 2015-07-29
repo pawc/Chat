@@ -1,6 +1,8 @@
 package pawc.chat.shared.model;
 
-public class PrivateMessage {
+import java.io.Serializable;
+
+public class PrivateMessage implements Serializable {
 
     private String sender;
     private String recipient;
@@ -11,5 +13,15 @@ public class PrivateMessage {
         this.recipient = recipient;
         this.message = message;
     }
+    public String getSender(){
+        return sender;
+    }
     
+    public String getRecipient(){
+        return recipient;
+    }
+    
+    public String getMessage(){
+        return message;
+    }
 }

@@ -66,7 +66,7 @@ public class Controller {
     	   String nick = selected.getSelectedItem().toString();
     	   if(event.getClickCount()==2){
     	       if(isPMalreadyOpened(nick)) log("Conversation window with "+nick+" already opened");
-    	       //else if(nick.equals(Controller.nick)) log("Can't pm with yourself");
+    	       else if(nick.equals(Controller.nick)) log("Can't pm with yourself");
     	       else{
     	           openNewPrivateWindow(nick);
     	       }
@@ -170,16 +170,22 @@ public class Controller {
         return socket;
     }
     
-    private boolean isPMalreadyOpened(String nick){
+    public boolean isPMalreadyOpened(String nick){
         boolean answer = false;
         for(PrivateMessagePaneController controller : privateMessagePaneControllerContainer){
             if(nick.equals(controller.getNick())) answer = true;
+            break;
         }
         return answer;
         
     }
 
-    private void openNewPrivateWindow(String nick){
+    public void openNewPrivateWindow(String nick){
+        
+        Platform.runLater(new Runnable() {
+            
+            public void run(){
+            
         BorderPane PrivateMessagePane = null;
         PrivateMessagePaneController controller = new PrivateMessagePaneController(nick);
        
@@ -213,7 +219,12 @@ public class Controller {
             
         });
         stage.show();
+        
+            }
+        
+        });
     }
+        
     
     
 }

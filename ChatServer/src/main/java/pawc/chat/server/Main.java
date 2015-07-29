@@ -40,11 +40,11 @@ public class Main {
 		
 		log.info("Server started. Awaiting connections...");
 		
-		//Scanner sc = new Scanner(System.in);
-		//String line = "";
+		Scanner sc = new Scanner(System.in);
+		String line = "";
 		
 		while(true){
-			/*
+			
 			try{
 			line = sc.nextLine();
 			}
@@ -57,7 +57,7 @@ public class Main {
 					}
 					break;
 				}
-				
+				/*
 				case "shutdown" : {
 					for(Client client : clientContainer){
 						client.exit();
@@ -66,9 +66,9 @@ public class Main {
 					sc.close();
 					System.exit(0);
 					break;
-				}
+				}*/
 			}
-		*/	
+			
 		}
 
 	}
