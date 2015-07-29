@@ -25,11 +25,9 @@ public class Main extends Application {
 			@Override
 			public void handle(WindowEvent event) {
 				System.exit(0);
-				
 			}
 			
 		});
-		
 	}
 
 	public static void main(String[] args) {

@@ -1,19 +1,19 @@
 package pawc.chat.server;
 
+
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import pawc.chat.server.model.Client;
 import pawc.chat.shared.model.Data;
 
-public class SocketHandler extends Thread{
+public class SocketConnection extends Thread{
 
 	private Client client;
 	
-	public SocketHandler(Client client){
+	public SocketConnection(Client client){
 		this.client=client;
 	}
 	
@@ -24,7 +24,20 @@ public class SocketHandler extends Thread{
     	       String command = data.getCommand();
     	           switch(command){
     	           case "introduction" :
-    	               client.setNick((String) data.getArguments());
+    	               String nick = (String) data.getArguments();
+    	               if(checkIfNickAlreadyInUse(nick)){
+    	                   client.out.writeObject(new Data("NickAlreadyInUse", null));
+    	                   client.out.flush();
+    	                   client.in.close();
+    	                   client.out.close();
+    	                   client.getSocket().close();
+    	                   Main.clientContainer.remove(client);
+    	                   Main.log.info("Client "+client.getSocket().getInetAddress().getHostName()+
+    	                           " chose a nick already in use. Disconnecting ");
+    	                   return;
+    	               }
+    	               client.setNick(nick);
+    	               Main.clientContainer.add(client);
     	               sendNicksToAll();
     	               break;
     	           
@@ -81,7 +94,14 @@ public class SocketHandler extends Thread{
 	            continue;
 	        }
         }
-	    
+    }
+	
+	private boolean checkIfNickAlreadyInUse(String nick){
+	    boolean answer = false;
+	    for(Client client : Main.clientContainer){
+	        if(client.getNick().equals(nick)) answer = true;
+	    }
+	    return answer;
 	}
 	
 	

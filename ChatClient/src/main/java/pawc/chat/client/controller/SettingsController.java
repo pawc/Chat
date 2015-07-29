@@ -23,11 +23,6 @@ public class SettingsController {
 			Controller.port=Integer.parseInt(portfield.getText());
 			
 		});
-		
-		
-	
 	}
-	
-	
 	
 }

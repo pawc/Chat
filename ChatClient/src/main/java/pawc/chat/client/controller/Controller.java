@@ -31,21 +31,14 @@ import pawc.chat.shared.model.Data;
 
 public class Controller {
 
-    @FXML
-    protected TextArea area;
-    
-    @FXML
-    protected TextField field;
-    
-    @FXML
-    protected ListView list;
-    
+    @FXML protected TextArea area;
+    @FXML protected TextField field;
+    @FXML protected ListView list;
     @FXML private MenuItem connect;
     @FXML private MenuItem settings;
     @FXML private MenuItem about;
     
     protected ObservableList<String> observableList;
-  
     protected static String nick = "guest";	
     protected static String host = "localhost";
     protected static int port = 3000;
@@ -53,7 +46,6 @@ public class Controller {
     protected ObjectOutputStream out = null;
     protected boolean connected = false;
 
-    
     public void initialize(){
     	
     	observableList = FXCollections.observableArrayList();
@@ -65,7 +57,6 @@ public class Controller {
     	area.wrapTextProperty().set(true);
     	
     	field.setOnKeyPressed(new EventHandler<KeyEvent>(){
-    		
     		public void handle(KeyEvent e){
     			if(connected&&!field.getText().equals("")){
 	    			if(e.getCode()==KeyCode.ENTER){
@@ -75,7 +66,6 @@ public class Controller {
 	    				    out.writeObject(data);
 	    				    out.flush();
 	    				    field.setText("");
-	    				    
 	    				}
 	    				catch(IOException er){
 	    				    log("Error sending message");
@@ -83,7 +73,6 @@ public class Controller {
 	    				}
 	    			}
     			}
-    		
     		}
     	});
     	
@@ -92,6 +81,10 @@ public class Controller {
     	});
     	
     	settings.setOnAction(event->{
+    	    if(connected){
+    	        log("Can't edit setting when connected");
+    	        return;
+    	    }
     		AnchorPane settingsPane;
     		try {
 				settingsPane = (AnchorPane) FXMLLoader.load(Main.class.getResource("controller/Settings.fxml"));
@@ -105,8 +98,6 @@ public class Controller {
     		stage.setResizable(false);
     		stage.setScene(scene);
     		stage.show();
-    		
-    		
     	});
     	
     	about.setOnAction(event->{

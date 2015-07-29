@@ -7,11 +7,11 @@ import java.net.Socket;
 
 import pawc.chat.server.model.Client;
 
-public class ServerListener extends Thread {
+public class SocketListener extends Thread {
 
 	protected ServerSocket serverSocket;
 	
-	public ServerListener(ServerSocket s){
+	public SocketListener(ServerSocket s){
 		serverSocket=s;
 	}
 	
@@ -20,11 +20,8 @@ public class ServerListener extends Thread {
 			try{
 				Socket socket = serverSocket.accept();
 				Main.log.info("new connection from "+socket.getInetAddress().toString());
-				
 				Client client = new Client(socket);
-				SocketHandler socketHandler = new SocketHandler(client);
-				
-				Main.clientContainer.add(client);
+				SocketConnection socketHandler = new SocketConnection(client);
 				socketHandler.start();
 				Main.log.info("thread for the new connection started");
 			

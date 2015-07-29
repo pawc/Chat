@@ -36,7 +36,7 @@ public class Main {
 			System.exit(0);
 		}
 		
-		new ServerListener(serverSocket).start();
+		new SocketListener(serverSocket).start();
 		
 		log.info("Server started. Awaiting connections...");
 		

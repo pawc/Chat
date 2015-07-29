@@ -47,7 +47,7 @@ public class Connection extends Thread {
 	    	}
 	    	
 	    	controller.log("Connected");
-	    	controller.log("Initializing streams");
+	    	//controller.log("Initializing streams");
 	    	ObjectInputStream in;
 	    	ObjectOutputStream out;
 	    	
@@ -64,13 +64,13 @@ public class Connection extends Thread {
                 controller.log(e.toString());
                 return; 
 	    	}
-	    	controller.log("Streams initialized");
+	    	//controller.log("Streams initialized");
 	    	
 	    	Data dataNick = new Data("introduction", controller.nick);
 	    	
 	    	try{
 	    	    out.writeObject(dataNick);
-	    	    controller.log("Nick sent. Entering main loop");
+	    	    //controller.log("Nick sent. Entering main loop");
     	    	while(controller.connected){
     	    	    Data data = (Data) in.readObject();
     	    	    String command = data.getCommand();
@@ -83,7 +83,15 @@ public class Connection extends Thread {
     	    	        controller.removeNicks();
     	    	        controller.addNicks((List) data.getArguments());
     	    	    }
+    	    	    if(command.equals("NickAlreadyInUse")){
+    	    	        controller.area.appendText("Nick already in use. Choose a different one and reconnect\n");
+    	    	        break;
+    	    	    }
     	    	}
+    	    	out.close();
+    	    	in.close();
+    	    	controller.socket.close();
+    	    	controller.connected = false;
 	    	}
 	    	catch(IOException | ClassNotFoundException | NullPointerException e){
 	    	    controller.log(e.toString());
