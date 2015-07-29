@@ -24,7 +24,7 @@ public class PrivateMessagePaneController {
     public void initialize(){
         
         area.setEditable(false);
-        area.setText("chat with "+nick);
+        area.setText("chat with "+nick+"\n");
         
         field.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override

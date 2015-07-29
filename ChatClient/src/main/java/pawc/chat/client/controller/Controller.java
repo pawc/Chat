@@ -1,8 +1,5 @@
 package pawc.chat.client.controller;
 
-
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -41,8 +38,8 @@ public class Controller {
     @FXML private MenuItem about;
     
     protected ObservableList<String> observableList;
-    protected static String nick = "guest";	
-    protected static String host = "localhost";
+    protected static String nick = "asia";	
+    protected static String host = "192.168.1.21";
     protected static int port = 3000;
     protected static ArrayList<PrivateMessagePaneController> privateMessagePaneControllerContainer;
     protected Socket socket;
@@ -68,7 +65,9 @@ public class Controller {
     	       if(isPMalreadyOpened(nick)) log("Conversation window with "+nick+" already opened");
     	       else if(nick.equals(Controller.nick)) log("Can't pm with yourself");
     	       else{
-    	           openNewPrivateWindow(nick);
+    	           PrivateMessagePaneController c = new PrivateMessagePaneController(nick);
+    	           Controller.privateMessagePaneControllerContainer.add(c);
+    	           openNewPrivateWindow(c);
     	       }
     	   }
     	});
@@ -180,46 +179,44 @@ public class Controller {
         
     }
 
-    public void openNewPrivateWindow(String nick){
+    public void openNewPrivateWindow(PrivateMessagePaneController c){
         
         Platform.runLater(new Runnable() {
             
-            public void run(){
+        public void run(){
             
-        BorderPane PrivateMessagePane = null;
-        PrivateMessagePaneController controller = new PrivateMessagePaneController(nick);
-       
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass()
-                .getResource("/pawc/chat/client/controller/PrivateMessagePane.fxml"));
-        
-        fxmlLoader.setController(controller);
-        fxmlLoader.setRoot(PrivateMessagePane);
-        
-        try{
-            PrivateMessagePane = (BorderPane) fxmlLoader.load();
-        }
-        catch(IOException e){
-            log("Couldn't load private message pane: "+e.toString());
-            return;
-        }
-        
-        Scene scene = new Scene(PrivateMessagePane);
-        Stage stage = new Stage();
-        stage.setTitle("Private conversation with "+nick);
-        stage.setResizable(true);
-        stage.setScene(scene);
-        Controller.privateMessagePaneControllerContainer.add(controller);
-        
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>(){
-        
-            @Override
-            public void handle(WindowEvent event) {
-                privateMessagePaneControllerContainer.remove(controller);
+            BorderPane PrivateMessagePane = null;
+            
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass()
+                    .getResource("/pawc/chat/client/controller/PrivateMessagePane.fxml"));
+            
+            fxmlLoader.setController(c);
+            fxmlLoader.setRoot(PrivateMessagePane);
+            
+            try{
+                PrivateMessagePane = (BorderPane) fxmlLoader.load();
+            }
+            catch(IOException e){
+                log("Couldn't load private message pane: "+e.toString());
+                return;
             }
             
-        });
-        stage.show();
-        
+            Scene scene = new Scene(PrivateMessagePane);
+            Stage stage = new Stage();
+            stage.setTitle("Private conversation with "+c.getNick());
+            stage.setResizable(true);
+            stage.setScene(scene);
+            
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>(){
+            
+                @Override
+                public void handle(WindowEvent event) {
+                    privateMessagePaneControllerContainer.remove(c);
+                }
+                
+            });
+            stage.show();
+            
             }
         
         });

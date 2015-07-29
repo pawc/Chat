@@ -93,23 +93,26 @@ public class Connection extends Thread {
     	    	        String sender = privateMessage.getSender();
     	    	        String recipient = privateMessage.getRecipient();
     	    	        String message = privateMessage.getMessage();
-    	    	        if(controller.isPMalreadyOpened(sender)){
+    	    	        
+    	    	        if(sender.equals(Controller.nick)){
+    	    	            // if you are the sender
+    	    	            PrivateMessagePaneController c = returnPMcontrollerOfANick(recipient);
+    	    	            c.appendToArea(time+" "+sender+": "+message);
+    	    	            continue;
+    	    	        }
+    	    	        if(recipient.equals(Controller.nick)){
+    	    	            // if you are the recipient
+    	    	          if(controller.isPMalreadyOpened(sender)){
     	    	            PrivateMessagePaneController c = returnPMcontrollerOfANick(sender);
     	    	            if(c==null) controller.log("Error with PM controller of "+sender);
-    	    	            else{
-    	    	                c.appendToArea(time+" "+sender+": "+message);
-    	    	            }
-    	    	        }
-    	    	        else{
-    	    	            controller.openNewPrivateWindow(sender);
-    	    	            try {
-                                Thread.sleep(3000);
-                            } catch (InterruptedException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            }
-    	    	            PrivateMessagePaneController c = returnPMcontrollerOfANick(sender);
+    	    	            c.appendToArea(time+" "+sender+": "+message+"\n");
+    	    	          }
+    	    	          else{
+    	    	            PrivateMessagePaneController c = new PrivateMessagePaneController(sender);
+    	    	            Controller.privateMessagePaneControllerContainer.add(c);
+    	    	            controller.openNewPrivateWindow(c);
     	    	            c.appendToArea(time+" "+sender+": "+message);
+    	    	           }
     	    	        }
     	    	    }
     	    	}
@@ -118,7 +121,13 @@ public class Connection extends Thread {
     	    	controller.socket.close();
     	    	controller.connected = false;
 	    	}
-	    	catch(IOException | ClassNotFoundException | NullPointerException e){
+	    	catch(NullPointerException e){
+	    	    controller.log(e.toString());
+                e.printStackTrace();
+                //controller.connected=false;
+                return;
+	    	}
+	    	catch(IOException | ClassNotFoundException e){
 	    	    controller.log(e.toString());
 	    	    e.printStackTrace();
                 controller.connected=false;
@@ -128,11 +137,11 @@ public class Connection extends Thread {
 	}
 	
 	public PrivateMessagePaneController returnPMcontrollerOfANick(String nick){
-	    PrivateMessagePaneController contr = null;
+	    
 	    for(PrivateMessagePaneController c : Controller.privateMessagePaneControllerContainer){
-	        if(c.getNick().equals(nick)) contr=c;
+	        if(c.getNick().equals(nick)) return c;
 	        break;
 	    }
-	    return contr;
+	    return null;
 	}
 }
