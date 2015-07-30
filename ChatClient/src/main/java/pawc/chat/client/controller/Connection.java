@@ -79,7 +79,13 @@ public class Connection extends Thread {
     	    	    int hours = calendar.getTime().getHours();
     	    	    int minutes = calendar.getTime().getMinutes();
     	    	    String time = hours+":"+minutes;
-    	    	    if(command.equals("message")) controller.area.appendText(time+" "+(String) data.getArguments());
+    	    	    if(command.equals("message")) {
+    	    	        String message = (String) data.getArguments();
+    	    	        message = message.replace(":)", "\u263a");
+    	    	        message = message.replace(":(", " \u2639");
+    	    	            	    	       
+    	    	       controller.area.appendText(time+" "+message);
+    	    	    }
     	    	    if(command.equals("nicks")){
     	    	        controller.removeNicks();
     	    	        controller.addNicks((List) data.getArguments());
@@ -93,6 +99,8 @@ public class Connection extends Thread {
     	    	        String sender = privateMessage.getSender();
     	    	        String recipient = privateMessage.getRecipient();
     	    	        String message = privateMessage.getMessage();
+    	    	        message = message.replace(":)", "\u263a");
+                        message = message.replace(":(", " \u2639");
     	    	        
     	    	        if(sender.equals(Controller.nick)){
     	    	            // if you are the sender

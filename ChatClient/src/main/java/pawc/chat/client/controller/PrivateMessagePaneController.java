@@ -24,6 +24,7 @@ public class PrivateMessagePaneController {
     public void initialize(){
         
         area.setEditable(false);
+        area.setWrapText(true);
                 
         field.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
