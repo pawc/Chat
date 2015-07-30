@@ -67,7 +67,7 @@ public class Controller {
     	       else{
     	           PrivateMessagePaneController c = new PrivateMessagePaneController(nick);
     	           Controller.privateMessagePaneControllerContainer.add(c);
-    	           openNewPrivateWindow(c);
+    	           openNewPrivateWindow(c, "private chat with "+nick);
     	       }
     	   }
     	});
@@ -179,7 +179,7 @@ public class Controller {
         
     }
 
-    public void openNewPrivateWindow(PrivateMessagePaneController c){
+    public void openNewPrivateWindow(PrivateMessagePaneController c, String initialMessage){
         
         Platform.runLater(new Runnable() {
             
@@ -205,6 +205,9 @@ public class Controller {
             Stage stage = new Stage();
             stage.setTitle("Private conversation with "+c.getNick());
             stage.setResizable(true);
+            
+            c.appendToArea(initialMessage);
+            
             stage.setScene(scene);
             
             stage.setOnCloseRequest(new EventHandler<WindowEvent>(){

@@ -24,8 +24,7 @@ public class PrivateMessagePaneController {
     public void initialize(){
         
         area.setEditable(false);
-        area.setText("chat with "+nick+"\n");
-        
+                
         field.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -38,7 +37,7 @@ public class PrivateMessagePaneController {
                     field.setText("");
                     }
                     catch(IOException e){
-                        area.appendText("Couldn't send private message to "+nick+"\n");
+                        area.appendText("Couldn't send private message to "+nick);
                         area.appendText(e.toString());
                         e.printStackTrace();
                         

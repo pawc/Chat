@@ -105,13 +105,13 @@ public class Connection extends Thread {
     	    	          if(controller.isPMalreadyOpened(sender)){
     	    	            PrivateMessagePaneController c = returnPMcontrollerOfANick(sender);
     	    	            if(c==null) controller.log("Error with PM controller of "+sender);
-    	    	            c.appendToArea(time+" "+sender+": "+message+"\n");
+    	    	            c.appendToArea(time+" "+sender+": "+message);
     	    	          }
     	    	          else{
     	    	            PrivateMessagePaneController c = new PrivateMessagePaneController(sender);
     	    	            Controller.privateMessagePaneControllerContainer.add(c);
-    	    	            controller.openNewPrivateWindow(c);
-    	    	            c.appendToArea(time+" "+sender+": "+message);
+    	    	            String initialMessage = time+" "+sender+": "+message;
+    	    	            controller.openNewPrivateWindow(c, initialMessage);
     	    	           }
     	    	        }
     	    	    }
