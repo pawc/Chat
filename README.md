@@ -1,6 +1,7 @@
 # Chat
 Simple chat in a client/server model with JavaFX UI.
 
+-------------------------------------------------
 Usage 
 -------------------------------------------------
 1. Git clone it
