@@ -38,8 +38,8 @@ public class Controller {
     @FXML private MenuItem about;
     
     protected ObservableList<String> observableList;
-    protected static String nick = "asia";	
-    protected static String host = "192.168.1.21";
+    protected static String nick = "gues";	
+    protected static String host = "pawc.ddns.net";
     protected static int port = 3000;
     protected static ArrayList<PrivateMessagePaneController> privateMessagePaneControllerContainer;
     protected Socket socket;
