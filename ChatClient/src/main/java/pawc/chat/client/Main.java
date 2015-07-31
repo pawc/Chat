@@ -14,7 +14,7 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws IOException {
-		BorderPane borderPane = (BorderPane) FXMLLoader.load(Main.class.getResource("Main.fxml"));
+		BorderPane borderPane = (BorderPane) FXMLLoader.load(ClassLoader.getSystemResource("ui/Main.fxml"));
 		primaryStage.setTitle("ChatClient");
 		Scene scene = new Scene(borderPane);
 		primaryStage.setScene(scene);

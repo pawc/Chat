@@ -23,12 +23,12 @@ public class Connection extends Thread {
 	public void run(){
 		
 	    	if(controller.nick.equals("")){ 
-	    		controller.log("Set your nick in Chat->Settings and try again");
+	    		controller.log("Set your nick in Chat>Settings and try again");
 	    		return;
 	    	}
 	    	
 	    	if(controller.host.equals("")){ 
-	    		controller.log("Set host in Chat->Settings and try again");
+	    		controller.log("Set host in Chat>Settings and try again");
 	    		return;
 	    	}
 	    	
@@ -48,7 +48,7 @@ public class Connection extends Thread {
 	    	}
 	    	
 	    	controller.log("Connected");
-	    	//controller.log("Initializing streams");
+	    	
 	    	ObjectInputStream in;
 	    	ObjectOutputStream out;
 	    	
@@ -65,14 +65,14 @@ public class Connection extends Thread {
                 controller.log(e.toString());
                 return; 
 	    	}
-	    	//controller.log("Streams initialized");
 	    	
 	    	Data dataNick = new Data("introduction", controller.nick);
 	    	
 	    	try{
+	    	    // sending an introduction to the server
 	    	    out.writeObject(dataNick);
-	    	    //controller.log("Nick sent. Entering main loop");
-    	    	while(controller.connected){
+	    	    while(controller.connected){
+	    	        // main loop receiving Data from the server
     	    	    Data data = (Data) in.readObject();
     	    	    String command = data.getCommand();
     	    	    GregorianCalendar calendar = new GregorianCalendar();
@@ -83,8 +83,7 @@ public class Connection extends Thread {
     	    	        String message = (String) data.getArguments();
     	    	        message = message.replace(":)", "\u263a");
     	    	        message = message.replace(":(", " \u2639");
-    	    	            	    	       
-    	    	       controller.area.appendText(time+" "+message);
+    	    	        controller.area.appendText(time+" "+message);
     	    	    }
     	    	    if(command.equals("nicks")){
     	    	        controller.removeNicks();
@@ -103,13 +102,13 @@ public class Connection extends Thread {
                         message = message.replace(":(", " \u2639");
     	    	        
     	    	        if(sender.equals(Controller.nick)){
-    	    	            // if you are the sender
+    	    	            // when this client sent the private message
     	    	            PrivateMessagePaneController c = returnPMcontrollerOfANick(recipient);
     	    	            c.appendToArea(time+" "+sender+": "+message);
     	    	            continue;
     	    	        }
     	    	        if(recipient.equals(Controller.nick)){
-    	    	            // if you are the recipient
+    	    	            // when the private message is addressed to this client
     	    	          if(controller.isPMalreadyOpened(sender)){
     	    	            PrivateMessagePaneController c = returnPMcontrollerOfANick(sender);
     	    	            if(c==null) controller.log("Error with PM controller of "+sender);
@@ -130,13 +129,13 @@ public class Connection extends Thread {
     	    	controller.connected = false;
 	    	}
 	    	catch(NullPointerException e){
-	    	    controller.log(e.toString());
+	    	    controller.log(e.toString()+". Disconnecting");
                 e.printStackTrace();
-                //controller.connected=false;
+                controller.connected=false;
                 return;
 	    	}
 	    	catch(IOException | ClassNotFoundException e){
-	    	    controller.log(e.toString());
+	    	    controller.log(e.toString()+". Disconnecting");
 	    	    e.printStackTrace();
                 controller.connected=false;
                 return;
@@ -148,7 +147,7 @@ public class Connection extends Thread {
 	    
 	    for(PrivateMessagePaneController c : Controller.privateMessagePaneControllerContainer){
 	        if(c.getNick().equals(nick)) return c;
-	        break;
+	        //break
 	    }
 	    return null;
 	}

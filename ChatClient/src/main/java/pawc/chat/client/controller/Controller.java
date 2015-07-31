@@ -54,7 +54,7 @@ public class Controller {
     	list.setItems(observableList);
     	
     	area.setText("Welcome to ChatClient. Edit nick, host and port"
-    			+ " in Chat->Settings. \nTo connect click Chat->Connect\n");
+    			+ " in Chat>Settings. \nTo connect click Chat>Connect\n");
     	area.setEditable(false);
     	area.wrapTextProperty().set(true);
     	
@@ -103,9 +103,10 @@ public class Controller {
     	    }
     		AnchorPane settingsPane;
     		try {
-				settingsPane = (AnchorPane) FXMLLoader.load(Main.class.getResource("controller/Settings.fxml"));
+				settingsPane = (AnchorPane) FXMLLoader.load(ClassLoader.getSystemResource("ui/Settings.fxml"));
 			} catch (IOException e) {
 				log("Couldn't load settings pane: "+e.toString());
+				e.printStackTrace();
 				return;
 			}
     		Scene scene = new Scene(settingsPane);
@@ -119,7 +120,7 @@ public class Controller {
     	about.setOnAction(event->{
     		AnchorPane aboutPane;
     		try{
-    			aboutPane = FXMLLoader.load(Main.class.getResource("About.fxml"));
+    			aboutPane = FXMLLoader.load(ClassLoader.getSystemResource("ui/About.fxml"));
     		}
     		catch(IOException e){
     			log("Couldn't load about pane: "+e.toString());
@@ -187,8 +188,7 @@ public class Controller {
             
             BorderPane PrivateMessagePane = null;
             
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass()
-                    .getResource("/pawc/chat/client/controller/PrivateMessagePane.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(ClassLoader.getSystemResource("ui/PrivateMessagePane.fxml"));
             
             fxmlLoader.setController(c);
             fxmlLoader.setRoot(PrivateMessagePane);
