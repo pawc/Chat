@@ -9,7 +9,7 @@ import pawc.chat.server.model.Client;
 
 public class SocketListener extends Thread {
 
-	protected ServerSocket serverSocket;
+	private ServerSocket serverSocket;
 	
 	public SocketListener(ServerSocket s){
 		serverSocket=s;

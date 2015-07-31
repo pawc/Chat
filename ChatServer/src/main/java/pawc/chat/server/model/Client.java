@@ -59,7 +59,7 @@ public class Client {
 	}
 	
 	public String toString(){
-		return nick+" ["+getSocket().getInetAddress().toString()+"] "+"oos: "+out.toString();
+		return nick+" ["+getSocket().getInetAddress().toString();
 	}
 	
 

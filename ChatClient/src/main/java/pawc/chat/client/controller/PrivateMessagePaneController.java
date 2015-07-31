@@ -14,8 +14,8 @@ import pawc.chat.shared.model.PrivateMessage;
 public class PrivateMessagePaneController {
 
     private String nick;
-    @FXML TextArea area;
-    @FXML TextField field;
+    @FXML protected TextArea area;
+    @FXML private TextField field;
     
     public PrivateMessagePaneController(String nick){
         this.nick=nick;

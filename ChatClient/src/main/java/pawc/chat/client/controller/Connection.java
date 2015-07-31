@@ -14,7 +14,7 @@ import pawc.chat.shared.model.PrivateMessage;
 
 public class Connection extends Thread {
 	
-	Controller controller;
+	private Controller controller;
 
 	public Connection(Controller controller){
 		this.controller=controller;
