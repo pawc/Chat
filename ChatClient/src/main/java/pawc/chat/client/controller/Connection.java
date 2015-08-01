@@ -1,5 +1,6 @@
 package pawc.chat.client.controller;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 
 import java.io.ObjectInputStream;
@@ -7,6 +8,12 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import pawc.chat.client.controller.Controller;
 import pawc.chat.shared.model.Data;
@@ -84,10 +91,12 @@ public class Connection extends Thread {
     	    	        message = message.replace(":)", "\u263a");
     	    	        message = message.replace(":(", " \u2639");
     	    	        controller.area.appendText(time+" "+message);
+    	    	        if(!message.startsWith(Controller.nick)) sound("message");
     	    	    }
     	    	    if(command.equals("nicks")){
     	    	        controller.removeNicks();
     	    	        controller.addNicks((List) data.getArguments());
+    	    	        sound("changeInNicksList");
     	    	    }
     	    	    if(command.equals("NickAlreadyInUse")){
     	    	        controller.area.appendText("Nick already in use. Choose a different one and reconnect\n");
@@ -113,12 +122,14 @@ public class Connection extends Thread {
     	    	            PrivateMessagePaneController c = returnPMcontrollerOfANick(sender);
     	    	            if(c==null) controller.log("Error with PM controller of "+sender);
     	    	            c.appendToArea(time+" "+sender+": "+message);
+    	    	            sound("privateMessage");
     	    	          }
     	    	          else{
     	    	            PrivateMessagePaneController c = new PrivateMessagePaneController(sender);
     	    	            Controller.privateMessagePaneControllerContainer.add(c);
     	    	            String initialMessage = time+" "+sender+": "+message;
     	    	            controller.openNewPrivateWindow(c, initialMessage);
+    	    	            sound("privateMessage");
     	    	           }
     	    	        }
     	    	    }
@@ -151,4 +162,23 @@ public class Connection extends Thread {
 	    }
 	    return null;
 	}
+	
+	private void sound(String soundName){
+        new Thread(new Runnable() {
+            
+            @Override
+            public void run() {
+                try {
+                    Clip clip = AudioSystem.getClip();
+                    AudioInputStream inputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(ClassLoader.getSystemResourceAsStream("sounds/"+soundName+".wav")));
+                    clip.open(inputStream);
+                    clip.start();
+                } catch (LineUnavailableException | UnsupportedAudioFileException | IOException e) {
+                    e.printStackTrace();
+                }
+                
+            }
+        }).start();
+    }
+	
 }
