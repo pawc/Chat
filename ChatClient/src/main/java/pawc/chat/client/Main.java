@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -15,10 +16,12 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws IOException {
 		BorderPane borderPane = (BorderPane) FXMLLoader.load(ClassLoader.getSystemResource("ui/Main.fxml"));
-		primaryStage.setTitle("ChatClient");
+		primaryStage.setTitle("Chat");
 		Scene scene = new Scene(borderPane);
 		primaryStage.setScene(scene);
-		primaryStage.show();
+		Image icon = new Image(ClassLoader.getSystemResourceAsStream("icons/icon2.png"));
+        primaryStage.getIcons().add(icon);
+        primaryStage.show();
 		
 		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>(){
 
