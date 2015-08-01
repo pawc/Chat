@@ -38,7 +38,7 @@ public class Controller {
     @FXML private MenuItem about;
     
     protected ObservableList<String> observableList;
-    protected static String nick = "gues";	
+    protected static String nick = "guest";	
     protected static String host = "pawc.ddns.net";
     protected static int port = 3000;
     protected static ArrayList<PrivateMessagePaneController> privateMessagePaneControllerContainer;

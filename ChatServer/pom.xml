@@ -3,7 +3,12 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>pawc.chat.server</groupId>
   <artifactId>ChatServer</artifactId>
-  <packaging>jar</packaging>
+ <parent>
+    <groupId>pawc</groupId>
+    <artifactId>Chat</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
   <version>1.0</version>
   <name>ChatServer</name>
   <url>http://maven.apache.org</url>
@@ -64,5 +69,14 @@
     	 
   	</plugins>
   </build>
+
+<distributionManagement>
+      <site>
+        <name>Server</name>
+        <id>pawc.chat.server</id>
+        <url>http://pawc.ddns.net/Chat/ChatServer</url>
+      </site>
+ </distributionManagement>
+
     
 </project>
