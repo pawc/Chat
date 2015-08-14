@@ -14,7 +14,7 @@ public class PrivateMessageTest extends TestCase{
         return new TestSuite(PrivateMessageTest.class);
     }
     
-    public void TestPrivateMessage(){
+    public void testPrivateMessage(){
         PrivateMessage message = new PrivateMessage("john", "paul", "hello");
         assertTrue(message instanceof PrivateMessage);
         assertTrue(message.getSender().equals("john"));
