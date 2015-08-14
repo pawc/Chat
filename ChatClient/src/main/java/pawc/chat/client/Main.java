@@ -19,8 +19,8 @@ public class Main extends Application {
 		primaryStage.setTitle("Chat");
 		Scene scene = new Scene(borderPane);
 		primaryStage.setScene(scene);
-		Image icon = new Image(ClassLoader.getSystemResourceAsStream("icons/icon2.png"));
-        primaryStage.getIcons().add(icon);
+		//Image icon = new Image(ClassLoader.getSystemResourceAsStream("icons/icon2.png"));
+        //primaryStage.getIcons().add(icon);
         primaryStage.show();
 		
 		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>(){
