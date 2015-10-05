@@ -39,7 +39,7 @@ public class Controller {
     
     protected ObservableList<String> observableList;
     protected static String nick = "guest";	
-    protected static String host = "pawc.ddns.net";
+    protected static String host = "kritsit.ddns.net";
     protected static int port = 3000;
     protected static ArrayList<PrivateMessagePaneController> privateMessagePaneControllerContainer;
     protected Socket socket;
