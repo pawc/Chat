@@ -1,34 +1,39 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>pawc.chat.client</groupId>
-  <artifactId>ChatClient</artifactId>
-  <parent>
-    <groupId>pl.pawc</groupId>
-    <artifactId>Chat</artifactId>
-    <version>1.0</version>
-    <relativePath>../pom.xml</relativePath>
-  </parent>
-  <version>1.0</version>
-  <name>ChatClient</name>
-  <url>http://maven.apache.org</url>
-  <dependencies>
+ 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>pawc.chat.client</groupId>
+	<artifactId>ChatClient</artifactId>
+	<parent>
+		<groupId>pl.pawc</groupId>
+		<artifactId>Chat</artifactId>
+		<version>1.0</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<version>1.0</version>
+	<name>ChatClient</name>
+	<url>github.com/pawc/Chat</url>
+	
+	<dependencies>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-    
-     <dependency>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+		<version>3.8.1</version>
+		<scope>test</scope>
+    </dependency>   
+	<dependency>
 		<groupId>org.mockito</groupId>
 		<artifactId>mockito-all</artifactId>
 		<version>1.10.19</version>
 		<scope>test</scope>
     </dependency>
-  </dependencies>
+    <dependency>
+		<groupId>pl.pawc.chat</groupId>
+		<artifactId>ChatShared</artifactId>
+		<version>1.0</version>
+    </dependency>
+	</dependencies>
   
-   <build>
+	<build>
   	<plugins>
   	
   		<plugin>
@@ -36,44 +41,35 @@
 	        <artifactId>maven-compiler-plugin</artifactId>
 	        <version>3.3</version>
 	        <configuration>
-	          <source>1.8</source>
-	          <target>1.8</target>
+			<source>1.8</source>
+			<target>1.8</target>
 	        </configuration>
       	</plugin>
       	
       	<plugin>
-		      <artifactId>maven-assembly-plugin</artifactId>
-		      <configuration>
-		        <archive>
-		          <manifest>
-		            <mainClass>pl.pawc.chat.client.Main</mainClass>
-		          </manifest>
-		        </archive>
-		        <descriptorRefs>
-		          <descriptorRef>jar-with-dependencies</descriptorRef>
-		        </descriptorRefs>
-		      </configuration>
-		      <executions>
-		        <execution>
-		          <id>make-assembly</id>
-		          <phase>package</phase>
-		          <goals>
-		            <goal>single</goal>
-		          </goals>
-		        </execution>
-		      </executions>
-        </plugin>
+			<artifactId>maven-assembly-plugin</artifactId>
+			<configuration>
+				<archive>
+					<manifest>
+						<mainClass>pl.pawc.chat.client.Main</mainClass>
+					</manifest>
+				</archive>
+				<descriptorRefs>
+					<descriptorRef>jar-with-dependencies</descriptorRef>
+				</descriptorRefs>
+			</configuration>
+			<executions>
+				<execution>
+			    <id>make-assembly</id>
+			    <phase>package</phase>
+			    <goals>
+					<goal>single</goal>
+			    </goals>
+				</execution>
+			</executions>
+		</plugin>
     	 
-  	</plugins>
-  </build>
-
-<distributionManagement>
-      <site>
-	<name>Client</name>
-        <id>pl.pawc.chat.client</id>
-        <url>http://pawc.ddns.net/Chat/ChatClient</url>
-      </site>
- </distributionManagement>
-
+	</plugins>
+	</build>
   
 </project>

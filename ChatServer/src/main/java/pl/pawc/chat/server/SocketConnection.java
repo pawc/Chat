@@ -7,8 +7,8 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import pawc.chat.shared.model.Data;
-import pawc.chat.shared.model.PrivateMessage;
+import pl.pawc.chat.shared.Data;
+import pl.pawc.chat.shared.PrivateMessage;
 import pl.pawc.chat.server.model.Client;
 
 public class SocketConnection extends Thread{
@@ -87,7 +87,6 @@ public class SocketConnection extends Thread{
 	    
 	}
 	
-	
 	private void sendMessageToNicks(String nick1, String nick2, Data data) throws IOException{
 	    for(Client client : Main.clientContainer){
 	        if(client.getNick().equals(nick1)||client.getNick().equals(nick2)){
@@ -134,6 +133,5 @@ public class SocketConnection extends Thread{
 	    }
 	    return answer;
 	}
-	
-	
+		
 }

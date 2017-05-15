@@ -8,8 +8,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import pawc.chat.shared.model.Data;
-import pawc.chat.shared.model.PrivateMessage;
+import pl.pawc.chat.shared.Data;
+import pl.pawc.chat.shared.PrivateMessage;
 
 public class PrivateMessagePaneController {
 
@@ -60,7 +60,6 @@ public class PrivateMessagePaneController {
     
     public void appendToArea(String message){
         area.appendText(message+"\n");
-    }
-    
+    }    
     
 }

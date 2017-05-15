@@ -1,51 +1,18 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>pl.pawc</groupId>
-  <artifactId>Chat</artifactId>
-  <packaging>pom</packaging>
-  <version>1.0</version>
-  <name>Chat</name>
-  <url>https://pawc.ddns.net/Chat</url>
-
-
-  <modules>
-    <module>ChatServer</module>
-    <module>ChatClient</module>
-  </modules>
-
-<build>
-<pluginManagement>
-  <plugins>
-    <plugin>
-      <artifactId>maven-assembly-plugin</artifactId>
-      <configuration>
-        <descriptorRefs>
-          <descriptorRef>jar-with-dependencies</descriptorRef>
-        </descriptorRefs>
-      </configuration>
-      <executions>
-        <execution>
-          <id>make-assembly</id>
-          <phase>package</phase>
-          <goals>
-            <goal>single</goal>
-          </goals>
-        </execution>
-      </executions>
-    </plugin>
-  </plugins>
-</pluginManagement>
-</build>
-
- <distributionManagement>
-      <site>
-        <id>pawc.chat</id>
-        <url>http://pawc.ddns.net/Chat</url>
-      </site>
- </distributionManagement>
-
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>pl.pawc</groupId>
+	<artifactId>Chat</artifactId>
+	<packaging>pom</packaging>
+	<version>1.0</version>
+	<name>Chat</name>
+	<url>github.com/pawc/Chat</url>
+	
+	<modules>
+		<module>ChatShared</module>
+		<module>ChatClient</module>
+		<module>ChatServer</module>
+	</modules>
 
 </project>

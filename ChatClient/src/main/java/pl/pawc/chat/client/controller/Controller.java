@@ -25,7 +25,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import pawc.chat.shared.model.Data;
+import pl.pawc.chat.shared.Data;
 import pl.pawc.chat.client.Main;
 
 public class Controller {

@@ -1,4 +1,4 @@
-package pawc.chat.shared.model;
+package pl.pawc.chat.shared;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,9 +8,6 @@ import org.mockito.Mockito;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import pawc.chat.shared.model.Data;
-
 
 public class DataTest 
     extends TestCase

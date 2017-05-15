@@ -15,8 +15,8 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import pawc.chat.shared.model.Data;
-import pawc.chat.shared.model.PrivateMessage;
+import pl.pawc.chat.shared.Data;
+import pl.pawc.chat.shared.PrivateMessage;
 import pl.pawc.chat.client.controller.Controller;
 
 public class Connection extends Thread {

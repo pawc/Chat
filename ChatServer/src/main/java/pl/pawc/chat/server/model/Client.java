@@ -14,7 +14,6 @@ public class Client {
 	public ObjectOutputStream out;
 	public ObjectInputStream in;
 
-	
 	public Client(Socket socket){
 		nick = "";
 		this.socket=socket;
@@ -60,7 +59,6 @@ public class Client {
 	
 	public String toString(){
 		return nick+" ["+getSocket().getInetAddress().toString();
-	}
-	
+	}	
 
 }

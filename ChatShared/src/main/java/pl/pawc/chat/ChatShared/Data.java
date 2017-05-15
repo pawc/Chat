@@ -1,4 +1,4 @@
-package pawc.chat.shared.model;
+package pl.pawc.chat.shared;
 
 import java.io.Serializable;
 

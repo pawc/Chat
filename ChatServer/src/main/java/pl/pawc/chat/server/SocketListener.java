@@ -31,7 +31,6 @@ public class SocketListener extends Thread {
 				continue;
 			}
 		}
-	}
-	
+	}	
 	
 }
