@@ -8,6 +8,7 @@ import org.mockito.Mockito;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import pl.pawc.chat.shared.Data;
 
 public class DataTest 
     extends TestCase

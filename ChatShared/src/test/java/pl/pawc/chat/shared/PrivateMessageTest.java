@@ -3,6 +3,7 @@ package pl.pawc.chat.shared;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import pl.pawc.chat.shared.PrivateMessage;
 
 public class PrivateMessageTest extends TestCase{
 
