@@ -1,11 +1,11 @@
-package pawc.chat.server.model;
+package pl.pawc.chat.server.model;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import pawc.chat.server.Main;
+import pl.pawc.chat.server.Main;
 
 public class Client {
 	

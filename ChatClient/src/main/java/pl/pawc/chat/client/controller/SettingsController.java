@@ -1,4 +1,4 @@
-package pawc.chat.client.controller;
+package pl.pawc.chat.client.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

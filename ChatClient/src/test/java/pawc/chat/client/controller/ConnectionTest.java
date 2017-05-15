@@ -5,6 +5,8 @@ import org.mockito.Mockito;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import pl.pawc.chat.client.controller.Connection;
+import pl.pawc.chat.client.controller.Controller;
 
 /**
  * Unit test for simple App.

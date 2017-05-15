@@ -1,4 +1,4 @@
-package pawc.chat.client;
+package pl.pawc.chat.client;
 
 import java.io.IOException;
 

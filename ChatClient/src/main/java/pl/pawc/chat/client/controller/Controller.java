@@ -1,4 +1,4 @@
-package pawc.chat.client.controller;
+package pl.pawc.chat.client.controller;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -25,8 +25,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import pawc.chat.client.Main;
 import pawc.chat.shared.model.Data;
+import pl.pawc.chat.client.Main;
 
 public class Controller {
 

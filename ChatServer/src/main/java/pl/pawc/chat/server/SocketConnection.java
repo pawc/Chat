@@ -1,4 +1,4 @@
-package pawc.chat.server;
+package pl.pawc.chat.server;
 
 
 import java.io.DataOutputStream;
@@ -7,9 +7,9 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import pawc.chat.server.model.Client;
 import pawc.chat.shared.model.Data;
 import pawc.chat.shared.model.PrivateMessage;
+import pl.pawc.chat.server.model.Client;
 
 public class SocketConnection extends Thread{
 

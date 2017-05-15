@@ -4,12 +4,12 @@
   <groupId>pawc.chat.client</groupId>
   <artifactId>ChatClient</artifactId>
   <parent>
-    <groupId>pawc</groupId>
+    <groupId>pl.pawc</groupId>
     <artifactId>Chat</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <name>ChatClient</name>
   <url>http://maven.apache.org</url>
   <dependencies>
@@ -46,7 +46,7 @@
 		      <configuration>
 		        <archive>
 		          <manifest>
-		            <mainClass>pawc.chat.client.Main</mainClass>
+		            <mainClass>pl.pawc.chat.client.Main</mainClass>
 		          </manifest>
 		        </archive>
 		        <descriptorRefs>
@@ -70,7 +70,7 @@
 <distributionManagement>
       <site>
 	<name>Client</name>
-        <id>pawc.chat.client</id>
+        <id>pl.pawc.chat.client</id>
         <url>http://pawc.ddns.net/Chat/ChatClient</url>
       </site>
  </distributionManagement>

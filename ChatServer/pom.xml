@@ -4,9 +4,9 @@
   <groupId>pawc.chat.server</groupId>
   <artifactId>ChatServer</artifactId>
  <parent>
-    <groupId>pawc</groupId>
+    <groupId>pl.pawc</groupId>
     <artifactId>Chat</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <version>1.0</version>
@@ -49,7 +49,7 @@
 		      <configuration>
 		        <archive>
 		          <manifest>
-		            <mainClass>pawc.chat.server.Main</mainClass>
+		            <mainClass>pl.pawc.chat.server.Main</mainClass>
 		          </manifest>
 		        </archive>
 		        <descriptorRefs>

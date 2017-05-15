@@ -1,4 +1,4 @@
-package pawc.chat.server;
+package pl.pawc.chat.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.logging.Logger;
-import pawc.chat.server.model.Client;
+
+import pl.pawc.chat.server.model.Client;
 
 public class Main {
 	

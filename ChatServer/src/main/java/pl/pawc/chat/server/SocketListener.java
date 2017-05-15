@@ -1,11 +1,11 @@
-package pawc.chat.server;
+package pl.pawc.chat.server;
 
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import pawc.chat.server.model.Client;
+import pl.pawc.chat.server.model.Client;
 
 public class SocketListener extends Thread {
 
