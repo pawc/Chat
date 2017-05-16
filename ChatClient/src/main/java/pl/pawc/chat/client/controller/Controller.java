@@ -25,6 +25,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import pl.pawc.chat.shared.Crypto;
 import pl.pawc.chat.shared.Data;
 import pl.pawc.chat.client.Main;
 
@@ -45,8 +46,12 @@ public class Controller {
     protected Socket socket;
     protected static ObjectOutputStream out = null;
     protected boolean connected = false;
+    
+    public Crypto crypto;
 
     public void initialize(){
+    	
+    	crypto = new Crypto("E1BB465D57CAE7ACDBBE8091F9CE83DF");
     	
         privateMessagePaneControllerContainer = new ArrayList<PrivateMessagePaneController>();
         
@@ -78,7 +83,7 @@ public class Controller {
 	    			if(e.getCode()==KeyCode.ENTER){
 	    				try{
 	    				    String arguments = nick+": "+field.getText()+"\n";
-	    				    Data data = new Data("message", arguments);	
+	    				    Data data = new Data("message", crypto.encrypt(arguments));	
 	    				    out.writeObject(data);
 	    				    out.flush();
 	    				    field.setText("");
@@ -224,11 +229,5 @@ public class Controller {
         
         });
     }
-        
-    
-    
+ 
 }
-        
-
-    
-  

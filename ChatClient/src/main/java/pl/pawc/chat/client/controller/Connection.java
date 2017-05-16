@@ -88,6 +88,7 @@ public class Connection extends Thread {
     	    	    String time = hours+":"+minutes;
     	    	    if(command.equals("message")) {
     	    	        String message = (String) data.getArguments();
+    	    	        message = controller.crypto.decrypt(message);
     	    	        message = message.replace(":)", "\u263a");
     	    	        message = message.replace(":(", " \u2639");
     	    	        controller.area.appendText(time+" "+message);

@@ -45,6 +45,7 @@ public class SocketConnection extends Thread{
     	           
     	           case "message" :
     	               sendMessageToAll((String) data.getArguments());
+    	               //System.out.println("message" + (String) data.getArguments()); to test message encryption server side
     	               break;
     	           
     	           
