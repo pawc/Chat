@@ -45,7 +45,7 @@ public class SocketConnection extends Thread{
     	           
     	           case "message" :
     	               sendMessageToAll((String) data.getArguments());
-    	               //System.out.println("message" + (String) data.getArguments()); to test message encryption server side
+    	               //System.out.println("message" + (String) data.getArguments()); //to test message encryption server side
     	               break;
     	           
     	           
@@ -54,6 +54,7 @@ public class SocketConnection extends Thread{
     	               String recipient = privateMessage.getRecipient();
     	               String sender = privateMessage.getSender();
     	               sendMessageToNicks(sender, recipient, data);
+    	               //System.out.println("private message text" + privateMessage.getMessage()); //to test private message encryption server side
     	               break;
     	           }
     	   }

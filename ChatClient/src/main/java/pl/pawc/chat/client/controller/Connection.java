@@ -108,6 +108,7 @@ public class Connection extends Thread {
     	    	        String sender = privateMessage.getSender();
     	    	        String recipient = privateMessage.getRecipient();
     	    	        String message = privateMessage.getMessage();
+    	    	        message = controller.crypto.decrypt(message);
     	    	        message = message.replace(":)", "\u263a");
                         message = message.replace(":(", " \u2639");
     	    	        

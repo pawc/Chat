@@ -30,7 +30,7 @@ public class PrivateMessagePaneController {
             @Override
             public void handle(KeyEvent event) {
                 if(event.getCode()==KeyCode.ENTER&&!field.getText().equals("")){
-                    PrivateMessage privateMessage = new PrivateMessage(Controller.nick, nick, field.getText());
+                    PrivateMessage privateMessage = new PrivateMessage(Controller.nick, nick, Controller.crypto.encrypt(field.getText()));
                     Data data = new Data("privateMessage", privateMessage);
                     try{
                     Controller.out.writeObject(data);

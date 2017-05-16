@@ -47,12 +47,10 @@ public class Controller {
     protected static ObjectOutputStream out = null;
     protected boolean connected = false;
     
-    public Crypto crypto;
+    public static Crypto crypto = new Crypto("E1BB465D57CAE7ACDBBE8091F9CE83DF");
 
     public void initialize(){
-    	
-    	crypto = new Crypto("E1BB465D57CAE7ACDBBE8091F9CE83DF");
-    	
+    		
         privateMessagePaneControllerContainer = new ArrayList<PrivateMessagePaneController>();
         
     	observableList = FXCollections.observableArrayList();
