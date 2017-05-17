@@ -1,6 +1,5 @@
 package pl.pawc.chat.server;
 
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -23,8 +22,7 @@ public class SocketListener extends Thread {
 				Client client = new Client(socket);
 				SocketConnection socketHandler = new SocketConnection(client);
 				socketHandler.start();
-				Main.log.info("thread for the new connection started");
-			
+				Main.log.info("thread for the new connection started");	
 			}
 			catch(IOException e){
 				Main.log.warning("Error accepting incoming connection "+e.toString());

@@ -13,7 +13,7 @@ public class Main {
 	
 	public static Logger log = Logger.getLogger("Main Server");
 	protected static ServerSocket serverSocket = null;
-	protected static ArrayList<Client> clientContainer = new ArrayList<Client>();
+	public static ArrayList<Client> clientContainer = new ArrayList<Client>();
 	
 	public static void main(String args[]){
 		
@@ -58,7 +58,7 @@ public class Main {
 					}
 					break;
 				}
-				/*
+				
 				case "shutdown" : {
 					for(Client client : clientContainer){
 						client.exit();
@@ -67,7 +67,7 @@ public class Main {
 					sc.close();
 					System.exit(0);
 					break;
-				}*/
+				}
 			}
 			
 		}

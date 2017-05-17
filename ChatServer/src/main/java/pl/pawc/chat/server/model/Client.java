@@ -22,13 +22,13 @@ public class Client {
 		    out = new ObjectOutputStream(socket.getOutputStream());
 		    out.flush();
 		    in = new ObjectInputStream(socket.getInputStream());
+		    Main.log.info("Streams initialized.");
 		}
 		catch(IOException e){
 		    Main.log.warning("Error initializing streams");
 		    out = null;
 		    in = null;
 		}
-		Main.log.info("Streams initialized.");
 	}
 	
     public boolean exit(){
@@ -47,8 +47,7 @@ public class Client {
 	public Socket getSocket(){
 		return socket;
 	}
-	
-	
+		
 	public String getNick(){
 		return nick;
 	}
