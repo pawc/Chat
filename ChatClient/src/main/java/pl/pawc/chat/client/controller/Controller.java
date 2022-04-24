@@ -40,7 +40,7 @@ public class Controller {
     
     protected ObservableList<String> observableList;
     protected static String nick = "guest";	
-    protected static String host = "localhost";
+    protected static String host = "pawc.pl";
     protected static int port = 3000;
     protected static ArrayList<PrivateMessagePaneController> privateMessagePaneControllerContainer;
     protected Socket socket;
