@@ -41,7 +41,7 @@ public class MainServer {
 
 		logger.info("Server listening on port {}. Awaiting connections...", port);
 		
-		Scanner sc = new Scanner(System.in);
+/*		Scanner sc = new Scanner(System.in);
 		String line;
 		
 		while(isRunning){
@@ -65,7 +65,7 @@ public class MainServer {
 				logger.error(e);
 				e.printStackTrace();
 			}
-		}
+		}*/
 
 	}
 	

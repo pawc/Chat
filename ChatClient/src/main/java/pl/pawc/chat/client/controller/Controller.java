@@ -34,14 +34,14 @@ public class Controller {
     @FXML private MenuItem settings;
     @FXML private MenuItem about;
     
-    protected ObservableList<String> observableList;
+    protected static ObservableList<String> observableList;
     protected static String nick = "guest";	
     protected static String host = "localhost";
     protected static int port = 3000;
     protected static ArrayList<PrivateMessagePaneController> privateMessagePaneControllerContainer;
-    protected Socket socket;
+    protected static Socket socket;
     protected static ObjectOutputStream out = null;
-    protected boolean connected = false;
+    protected static boolean connected = false;
     
     public static Crypto crypto = new Crypto("E1BB465D57CAE7ACDBBE8091F9CE83DF");
 
@@ -89,7 +89,7 @@ public class Controller {
 			}
 		});
     	
-    	connect.setOnAction(event-> new Connection(this).start());
+    	connect.setOnAction(event-> new Connection(area).start());
     	
     	settings.setOnAction(event->{
     	    if(connected){
@@ -132,24 +132,15 @@ public class Controller {
     	
     }
     
-    public void addNicks(List<String> nicks){
+    public static void addNicks(List<String> nicks){
     	Platform.runLater(() -> observableList.addAll(nicks));
     }
     
-    public void removeNicks(){
+    public static void removeNicks(){
     	Platform.runLater(() -> observableList.clear());
     }
-    
-    
-    public void log(String string){
-    	area.appendText(string+"\n");
-    }
-    
-    public Socket getSocket(){
-        return socket;
-    }
-    
-    public boolean isPMalreadyOpened(String nick){
+
+    public static boolean isPMalreadyOpened(String nick){
         boolean answer = false;
         for(PrivateMessagePaneController controller : privateMessagePaneControllerContainer){
             if(nick.equals(controller.getNick())){
@@ -161,7 +152,7 @@ public class Controller {
         
     }
 
-    public void openNewPrivateWindow(PrivateMessagePaneController c, String initialMessage){
+    public static void openNewPrivateWindow(PrivateMessagePaneController c, String initialMessage){
         
         Platform.runLater(() -> {
 
@@ -173,10 +164,9 @@ public class Controller {
             fxmlLoader.setRoot(PrivateMessagePane);
 
             try{
-                PrivateMessagePane = (BorderPane) fxmlLoader.load();
+                PrivateMessagePane = fxmlLoader.load();
             }
             catch(IOException e){
-                log("Couldn't load private message pane: "+e);
                 return;
             }
 
@@ -194,5 +184,9 @@ public class Controller {
 
 		});
     }
+
+	protected void log(String string){
+		area.appendText(string+"\n");
+	}
  
 }
