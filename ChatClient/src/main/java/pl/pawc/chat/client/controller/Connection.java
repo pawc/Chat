@@ -17,14 +17,13 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import pl.pawc.chat.shared.Data;
 import pl.pawc.chat.shared.PrivateMessage;
-import pl.pawc.chat.client.controller.Controller;
 
 public class Connection extends Thread {
 	
-	private Controller controller;
+	private final Controller controller;
 
 	public Connection(Controller controller){
-		this.controller=controller;
+		this.controller = controller;
 	}
 	
 	public void run(){
@@ -58,14 +57,12 @@ public class Connection extends Thread {
 	    	
 	    	ObjectInputStream in;
 	    	ObjectOutputStream out;
-	    	
-	    	
+
 	    	try{
-	    	out = new ObjectOutputStream(controller.getSocket().getOutputStream());
-	    	out.flush();
-	    	in = new ObjectInputStream(controller.getSocket().getInputStream());
-	    	controller.out = out;
-	    	
+				out = new ObjectOutputStream(controller.getSocket().getOutputStream());
+				out.flush();
+				in = new ObjectInputStream(controller.getSocket().getInputStream());
+				controller.out = out;
 	    	}
 	    	catch(IOException e){
     	        controller.log("Couldn't initialize streams");

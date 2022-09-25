@@ -9,7 +9,6 @@ import java.util.List;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -20,11 +19,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import pl.pawc.chat.shared.Crypto;
 import pl.pawc.chat.shared.Data;
 
@@ -50,7 +47,7 @@ public class Controller {
 
     public void initialize(){
     		
-        privateMessagePaneControllerContainer = new ArrayList<PrivateMessagePaneController>();
+        privateMessagePaneControllerContainer = new ArrayList<>();
         
     	observableList = FXCollections.observableArrayList();
     	list.setItems(observableList);
@@ -74,29 +71,25 @@ public class Controller {
     	   }
     	});
     	
-    	field.setOnKeyPressed(new EventHandler<KeyEvent>(){
-    		public void handle(KeyEvent e){
-    			if(connected&&!field.getText().equals("")){
-	    			if(e.getCode()==KeyCode.ENTER){
-	    				try{
-	    				    String arguments = nick+": "+field.getText()+"\n";
-	    				    Data data = new Data("message", crypto.encrypt(arguments));	
-	    				    out.writeObject(data);
-	    				    out.flush();
-	    				    field.setText("");
-	    				}
-	    				catch(IOException er){
-	    				    log("Error sending message");
-	    				    log(er.toString());
-	    				}
-	    			}
-    			}
-    		}
-    	});
+    	field.setOnKeyPressed(e -> {
+			if(connected&&!field.getText().equals("")){
+				if(e.getCode()==KeyCode.ENTER){
+					try{
+						String arguments = nick+": "+field.getText()+"\n";
+						Data data = new Data("message", crypto.encrypt(arguments));
+						out.writeObject(data);
+						out.flush();
+						field.setText("");
+					}
+					catch(IOException er){
+						log("Error sending message");
+						log(er.toString());
+					}
+				}
+			}
+		});
     	
-    	connect.setOnAction(event->{
-    		new Connection(this).start();
-    	});
+    	connect.setOnAction(event-> new Connection(this).start());
     	
     	settings.setOnAction(event->{
     	    if(connected){
@@ -105,9 +98,9 @@ public class Controller {
     	    }
     		AnchorPane settingsPane;
     		try {
-				settingsPane = (AnchorPane) FXMLLoader.load(ClassLoader.getSystemResource("ui/Settings.fxml"));
+				settingsPane = FXMLLoader.load(ClassLoader.getSystemResource("ui/Settings.fxml"));
 			} catch (IOException e) {
-				log("Couldn't load settings pane: "+e.toString());
+				log("Couldn't load settings pane: "+e);
 				e.printStackTrace();
 				return;
 			}
@@ -125,7 +118,7 @@ public class Controller {
     			aboutPane = FXMLLoader.load(ClassLoader.getSystemResource("ui/About.fxml"));
     		}
     		catch(IOException e){
-    			log("Couldn't load about pane: "+e.toString());
+    			log("Couldn't load about pane: "+e);
     			return;
     		}
     		Scene scene = new Scene(aboutPane);
@@ -140,27 +133,11 @@ public class Controller {
     }
     
     public void addNicks(List<String> nicks){
-    	Platform.runLater(new Runnable() {
-			
-			@Override
-			public void run() {
-				for(String nick : nicks){
-				    observableList.add(nick);
-				}
-				
-			}
-		});
+    	Platform.runLater(() -> observableList.addAll(nicks));
     }
     
     public void removeNicks(){
-    	Platform.runLater(new Runnable() {
-			
-			@Override
-			public void run() {
-				observableList.clear();
-				
-			}
-		});
+    	Platform.runLater(() -> observableList.clear());
     }
     
     
@@ -175,8 +152,10 @@ public class Controller {
     public boolean isPMalreadyOpened(String nick){
         boolean answer = false;
         for(PrivateMessagePaneController controller : privateMessagePaneControllerContainer){
-            if(nick.equals(controller.getNick())) answer = true;
-            break;
+            if(nick.equals(controller.getNick())){
+				answer = true;
+				break;
+			}
         }
         return answer;
         
@@ -184,47 +163,36 @@ public class Controller {
 
     public void openNewPrivateWindow(PrivateMessagePaneController c, String initialMessage){
         
-        Platform.runLater(new Runnable() {
-            
-        public void run(){
-            
+        Platform.runLater(() -> {
+
             BorderPane PrivateMessagePane = null;
-            
+
             FXMLLoader fxmlLoader = new FXMLLoader(ClassLoader.getSystemResource("ui/PrivateMessagePane.fxml"));
-            
+
             fxmlLoader.setController(c);
             fxmlLoader.setRoot(PrivateMessagePane);
-            
+
             try{
                 PrivateMessagePane = (BorderPane) fxmlLoader.load();
             }
             catch(IOException e){
-                log("Couldn't load private message pane: "+e.toString());
+                log("Couldn't load private message pane: "+e);
                 return;
             }
-            
+
             Scene scene = new Scene(PrivateMessagePane);
             Stage stage = new Stage();
             stage.setTitle("Private conversation with "+c.getNick());
             stage.setResizable(true);
-            
+
             c.appendToArea(initialMessage);
-            
+
             stage.setScene(scene);
-            
-            stage.setOnCloseRequest(new EventHandler<WindowEvent>(){
-            
-                @Override
-                public void handle(WindowEvent event) {
-                    privateMessagePaneControllerContainer.remove(c);
-                }
-                
-            });
+
+            stage.setOnCloseRequest(event -> privateMessagePaneControllerContainer.remove(c));
             stage.show();
-            
-            }
-        
-        });
+
+		});
     }
  
 }

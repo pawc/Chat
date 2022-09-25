@@ -12,6 +12,7 @@ import pl.pawc.chat.server.model.Client;
 public class MainServer {
 
 	public static final Logger logger = LogManager.getLogger(MainServer.class);
+	private final static int DEFAULT_PORT = 3000;
 	protected static ServerSocket serverSocket = null;
 	public static ArrayList<Client> clients = new ArrayList<>();
 	public static boolean isRunning = true;
@@ -21,27 +22,29 @@ public class MainServer {
 		
 		try{
 			port = Integer.parseInt(args[0]);
-			serverSocket = new ServerSocket(port);
 		}
-		catch(NumberFormatException e){
-			logger.error("Enter a valid port number");
-			System.exit(0);
-		}
-		catch(IOException e){
-			logger.error("Couldn't start server on port {}", args[0]);
-			System.exit(0);
+		catch(ArrayIndexOutOfBoundsException | NumberFormatException e){
+			logger.info("Starting server using default port {}", DEFAULT_PORT);
+			port = DEFAULT_PORT;
 		}
 
-		logger.info("Starting server");
+		try{
+			serverSocket = new ServerSocket(port);
+		}
+		catch(IOException e){
+			logger.error("Couldn't start server on port {}", port);
+			isRunning = false;
+			return;
+		}
 
 		new SocketListener(serverSocket).start();
 
-		logger.info("Server started. Awaiting connections...");
+		logger.info("Server listening on port {}. Awaiting connections...", port);
 		
 		Scanner sc = new Scanner(System.in);
 		String line;
 		
-		while(true){
+		while(isRunning){
 			try{
 				line = sc.nextLine();
 				switch (line){
@@ -54,7 +57,6 @@ public class MainServer {
 						logger.info("Server shutdown");
 						sc.close();
 						isRunning = false;
-						System.exit(0);
 						break;
 					}
 				}

@@ -1,6 +1,7 @@
 package pl.pawc.chat.server;
 
 import java.io.IOException;
+import java.net.SocketException;
 
 import pl.pawc.chat.shared.Data;
 import pl.pawc.chat.shared.PrivateMessage;
@@ -41,8 +42,7 @@ public class SocketConnection extends Thread{
     	            case "message" :
 						Util.sendMessage((String) data.getArguments());
     	                break;
-    	           
-    	           
+
     	            case "privateMessage" :
     	                PrivateMessage privateMessage = (PrivateMessage) data.getArguments();
     	                String recipient = privateMessage.getRecipient();
@@ -51,15 +51,18 @@ public class SocketConnection extends Thread{
     	                break;
     	            }
     	    }
-	}
-	catch(IOException | ClassNotFoundException e){
-		MainServer.logger.info("Disconnecting client "+client.getNick());
-		MainServer.logger.warn(e.toString());
-		client.exit();
-		MainServer.clients.remove(client);
-		Util.sendNicksToAll();
-	}
-	this.interrupt();    
+		}
+		catch(IOException | ClassNotFoundException e){
+			MainServer.logger.info("Disconnecting client "+client.getNick());
+			if(!(e instanceof SocketException)) e.printStackTrace();
+			client.exit();
+			MainServer.clients.remove(client);
+			Util.sendNicksToAll();
+		}
+		finally{
+			this.interrupt();
+		}
+
 	}
 	
 }
