@@ -27,7 +27,6 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import pl.pawc.chat.shared.Crypto;
 import pl.pawc.chat.shared.Data;
-import pl.pawc.chat.client.Main;
 
 public class Controller {
 
@@ -40,7 +39,7 @@ public class Controller {
     
     protected ObservableList<String> observableList;
     protected static String nick = "guest";	
-    protected static String host = "pawc.pl";
+    protected static String host = "localhost";
     protected static int port = 3000;
     protected static ArrayList<PrivateMessagePaneController> privateMessagePaneControllerContainer;
     protected Socket socket;

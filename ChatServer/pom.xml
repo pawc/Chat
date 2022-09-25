@@ -14,24 +14,15 @@
 	<url>github.com/pawc/Chat</url>
   
 	<dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>  
-    <dependency>
-		<groupId>org.mockito</groupId>
-		<artifactId>mockito-all</artifactId>
-		<version>1.10.19</version>
-		<scope>test</scope>
-    </dependency>
-    <dependency>
-		<groupId>pl.pawc.chat</groupId>
-		<artifactId>ChatShared</artifactId>
-		<version>1.0</version>
-    </dependency>
-    </dependencies>
+
+
+		<dependency>
+			<groupId>pl.pawc.chat</groupId>
+			<artifactId>ChatShared</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+	</dependencies>
   
 	<build>
   	<plugins>
@@ -51,7 +42,7 @@
 		<configuration>
 		<archive>
 			<manifest>
-				<mainClass>pl.pawc.chat.server.Main</mainClass>
+				<mainClass>pl.pawc.chat.server.MainServer</mainClass>
 			</manifest>
 		</archive>
 		<descriptorRefs>
@@ -74,7 +65,7 @@
         <artifactId>exec-maven-plugin</artifactId>
         <version>1.6.0</version>
         <configuration>
-        	<mainClass>pl.pawc.chat.server.Main</mainClass>
+        	<mainClass>pl.pawc.chat.server.MainServer</mainClass>
         	<arguments>
         		<argument>3000</argument>
         	</arguments>

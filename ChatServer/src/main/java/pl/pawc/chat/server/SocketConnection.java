@@ -9,12 +9,10 @@ import pl.pawc.chat.server.util.Util;
 
 public class SocketConnection extends Thread{
 
-	private Client client;
-	private Util util;
-	
+	private final Client client;
+
 	public SocketConnection(Client client){
-		this.client=client;
-		this.util = new Util();
+		this.client = client;
 	}
 	
 	public void run(){
@@ -25,24 +23,23 @@ public class SocketConnection extends Thread{
     	            switch(command){
     	            case "introduction" :
     	                String nick = (String) data.getArguments();
-	                	if(util.checkIfNickAlreadyInUse(nick)){
+	                	if(Util.checkIfNickAlreadyInUse(nick)){
     	                    client.out.writeObject(new Data("NickAlreadyInUse", null));
     	                    client.out.flush();
     	                    client.in.close();
     	                    client.out.close();
     	                    client.getSocket().close();
-    	                    Main.log.info("Client "+client.getSocket().getInetAddress().getHostName()+
+    	                    MainServer.logger.info("Client "+client.getSocket().getInetAddress().getHostName()+
                     		"Nick already in use. Disconnecting ");
     	                   return;
     	                }
     	                client.setNick(nick);
-    	                Main.clientContainer.add(client);
-    	                util.sendNicksToAll();
+    	                MainServer.clients.add(client);
+						Util.sendNicksToAll();
     	                break;
     	           
     	            case "message" :
-    	                util.sendMessageToAll((String) data.getArguments());
-    	                //System.out.println("message" + (String) data.getArguments()); //to test message encryption server side
+						Util.sendMessage((String) data.getArguments());
     	                break;
     	           
     	           
@@ -50,18 +47,17 @@ public class SocketConnection extends Thread{
     	                PrivateMessage privateMessage = (PrivateMessage) data.getArguments();
     	                String recipient = privateMessage.getRecipient();
     	                String sender = privateMessage.getSender();
-    	                util.sendMessageToNicks(sender, recipient, data);
-    	                //System.out.println("private message text" + privateMessage.getMessage()); //to test private message encryption server side
+						Util.sendMessageToNicks(sender, recipient, data);
     	                break;
     	            }
     	    }
 	}
 	catch(IOException | ClassNotFoundException e){
-		Main.log.info("Disconnecting client "+client.getNick());
-		Main.log.warning(e.toString());
+		MainServer.logger.info("Disconnecting client "+client.getNick());
+		MainServer.logger.warn(e.toString());
 		client.exit();
-		Main.clientContainer.remove(client);
-		util.sendNicksToAll();
+		MainServer.clients.remove(client);
+		Util.sendNicksToAll();
 	}
 	this.interrupt();    
 	}

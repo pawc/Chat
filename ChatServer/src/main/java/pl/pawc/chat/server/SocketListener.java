@@ -8,25 +8,24 @@ import pl.pawc.chat.server.model.Client;
 
 public class SocketListener extends Thread {
 
-	private ServerSocket serverSocket;
+	private final ServerSocket serverSocket;
 	
-	public SocketListener(ServerSocket s){
-		serverSocket=s;
+	public SocketListener(ServerSocket serverSocket){
+		this.serverSocket = serverSocket;
 	}
 	
 	public void run(){
-		while(true){
+		while(MainServer.isRunning){
 			try{
 				Socket socket = serverSocket.accept();
-				Main.log.info("new connection from "+socket.getInetAddress().toString());
+				MainServer.logger.info("New connection from {}", socket.getInetAddress().toString());
 				Client client = new Client(socket);
 				SocketConnection socketHandler = new SocketConnection(client);
 				socketHandler.start();
-				Main.log.info("thread for the new connection started");	
 			}
 			catch(IOException e){
-				Main.log.warning("Error accepting incoming connection "+e.toString());
-				continue;
+				MainServer.logger.warn("Couldn't handle incoming connection");
+				MainServer.logger.error(e);
 			}
 		}
 	}	
