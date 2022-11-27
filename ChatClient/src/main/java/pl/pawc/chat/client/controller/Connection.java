@@ -2,14 +2,24 @@ package pl.pawc.chat.client.controller;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
-
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.Socket;
+import java.security.KeyManagementException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.cert.CertificateException;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Objects;
 
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
+import javax.net.ssl.X509TrustManager;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -46,10 +56,12 @@ public class Connection extends Thread {
 		}
 
 		try{
-			Controller.socket = new Socket(Controller.host, Controller.port);
+			SSLSocketFactory sslSocketFactory = getSSLSocketFactory();
+			Controller.socket = sslSocketFactory.createSocket(Controller.host, Controller.port);
+
 			Controller.connected = true;
 		}
-		catch(IOException e){
+		catch(Throwable e){
 			log("Couldn't connect to the server");
 			log(e.toString());
 			return;
@@ -76,10 +88,8 @@ public class Connection extends Thread {
 		GregorianCalendar calendar = new GregorianCalendar();
 
 		try{
-			// sending an introduction to the server
 			out.writeObject(dataNick);
 			while(Controller.connected){
-				// main loop receiving Data from the server
 				Data data = (Data) in.readObject();
 				String command = data.getCommand();
 
@@ -88,7 +98,6 @@ public class Connection extends Thread {
 				String time = hours+":"+minutes;
 				if(command.equals("message")) {
 					String message = (String) data.getArguments();
-					message = Controller.crypto.decrypt(message);
 					message = message.replace(":)", "\u263a");
 					message = message.replace(":(", " \u2639");
 					this.area.appendText(time+" "+message);
@@ -109,7 +118,6 @@ public class Connection extends Thread {
 					String sender = privateMessage.getSender();
 					String recipient = privateMessage.getRecipient();
 					String message = privateMessage.getMessage();
-					message = Controller.crypto.decrypt(message);
 					message = message.replace(":)", "\u263a");
 					message = message.replace(":(", " \u2639");
 
@@ -179,6 +187,33 @@ public class Connection extends Thread {
 
 	protected void log(String string){
 		area.appendText(string+"\n");
+	}
+
+	private SSLSocketFactory getSSLSocketFactory() throws KeyStoreException, NoSuchAlgorithmException, NoSuchProviderException, CertificateException, IOException, KeyManagementException {
+		System.setProperty("javax.net.debug", "ssl");
+
+		String password2 = "nFL9EehVtsiTMTi5rLOc";
+		KeyStore trustStore = KeyStore.getInstance("PKCS12");
+		TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance("PKIX", "SunJSSE");
+		InputStream inputStream1 = ClassLoader.getSystemClassLoader().getResourceAsStream("jschat-ca.p12");
+		trustStore.load(inputStream1, password2.toCharArray());
+		trustManagerFactory.init(trustStore);
+
+		X509TrustManager x509TrustManager = null;
+		for (TrustManager trustManager : trustManagerFactory.getTrustManagers()) {
+			if (trustManager instanceof X509TrustManager) {
+				x509TrustManager = (X509TrustManager) trustManager;
+				break;
+			}
+		}
+
+		if (x509TrustManager == null) throw new NullPointerException();
+
+		SSLContext sslContext = SSLContext.getInstance("TLS");
+		sslContext.init(null, new TrustManager[]{x509TrustManager}, null);
+
+		return sslContext.getSocketFactory();
+
 	}
 	
 }

@@ -22,7 +22,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import pl.pawc.chat.shared.Crypto;
 import pl.pawc.chat.shared.Data;
 
 public class Controller {
@@ -43,8 +42,6 @@ public class Controller {
     protected static ObjectOutputStream out = null;
     protected static boolean connected = false;
     
-    public static Crypto crypto = new Crypto("E1BB465D57CAE7ACDBBE8091F9CE83DF");
-
     public void initialize(){
     		
         privateMessagePaneControllerContainer = new ArrayList<>();
@@ -76,7 +73,7 @@ public class Controller {
 				if(e.getCode()==KeyCode.ENTER){
 					try{
 						String arguments = nick+": "+field.getText()+"\n";
-						Data data = new Data("message", crypto.encrypt(arguments));
+						Data data = new Data("message", arguments);
 						out.writeObject(data);
 						out.flush();
 						field.setText("");

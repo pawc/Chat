@@ -26,7 +26,7 @@ public class PrivateMessagePaneController {
                 
         field.setOnKeyPressed(event -> {
             if(event.getCode()==KeyCode.ENTER&&!field.getText().equals("")){
-                PrivateMessage privateMessage = new PrivateMessage(Controller.nick, nick, Controller.crypto.encrypt(field.getText()));
+                PrivateMessage privateMessage = new PrivateMessage(Controller.nick, nick, field.getText());
                 Data data = new Data("privateMessage", privateMessage);
                 try{
                 Controller.out.writeObject(data);
